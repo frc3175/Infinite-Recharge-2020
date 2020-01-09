@@ -6,15 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PWMVictorSPX;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.subsystems.Drive;
 import frc.robot.lib.RobotMap;
 import frc.robot.lib.KvLib;
@@ -33,6 +26,30 @@ public class Robot extends TimedRobot {
 
   // Drive controller
   private XboxController driver;
+
+
+  @Override
+	public void autonomousInit() {
+
+  }
+
+  @Override
+	public void autonomousPeriodic() {
+	/*	if (autonMode.equals("cross")) {
+			if (runTime.get() < 2) {
+				driveTrain.arcadeDrive(0.75, 0);
+			}
+		} else if (autonMode.equals("switch")) {
+			if ((field.charAt(0) == 'L' && LOCATION == 0) || (field.charAt(0) == 'R' && LOCATION == 1)) {
+				// 0 is left, 1 is right
+				switchDump();
+			} else {
+				if (runTime.get() < 1.5) {
+					driveTrain.arcadeDrive(0.75, 0);
+				}
+			}
+		} */ 
+	}
 
   @Override
   public void robotInit() {

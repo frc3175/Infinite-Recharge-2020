@@ -13,7 +13,7 @@ public class RobotMap {
     //Prototype TalonSRX IDs
     
 
-    //Shitfaced - Javier code
+    //Electronic transmission degrade
     public static final double transmission = 0.6;
 
     //Drive Controller port
@@ -22,6 +22,17 @@ public class RobotMap {
     //drive deadband
     public static final double driveDeadband = 0.2;
 
+    //Elevator Solenoid ports  
+    public static final int e_pistonSolenoid_F = 0;
+    public static final int e_pistonSolenoid_R = 1;
+    //Trench Solenoid ports  
+    public static final int t_pistonSolenoid_F = 2;
+    public static final int t_pistonSolenoid_R = 3;
 
+    //Pnuematic directions
+    //Elevator piston 0 == forward 1 == reverse 
+    public static final int elevatorDirection = 0;
 
+    //Trench piston 0 == forward 1 == reverse
+    public static final int trenchDirection = 0;
 }

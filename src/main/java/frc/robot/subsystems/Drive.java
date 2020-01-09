@@ -1,11 +1,11 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.drive.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.lib.KvLib;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import com.kauailabs.navx.frc.AHRS;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import frc.robot.lib.KvLib;
 import frc.robot.lib.RobotMap;
 
 public class Drive {
@@ -15,6 +15,7 @@ public class Drive {
     private WPI_TalonSRX m_rightDriveBack;
     private WPI_TalonSRX m_leftDriveFront;
     private WPI_TalonSRX m_rightDriveFront;
+    private KvLib kvLib;
 
     private SpeedControllerGroup leftDrive = new SpeedControllerGroup(m_leftDriveFront, m_leftDriveBack);
     private SpeedControllerGroup rightDrive = new SpeedControllerGroup(m_rightDriveFront, m_rightDriveBack);
@@ -28,6 +29,7 @@ public class Drive {
 
     public Drive() {
 
+        kvLib = new KvLib();
         // left Falcons
         m_leftDriveBack = new WPI_TalonSRX(RobotMap.m_leftDriveBack);
         m_leftDriveFront = new WPI_TalonSRX(RobotMap.m_leftDriveFront);
@@ -42,25 +44,10 @@ public class Drive {
         // m_rightDriveFront.configSelectedFeedbackSensor(com.ctre.phoenix.motorcontrol.FeedbackDevice.CTRE_MagEncoder_Relative);
 
         // Current limiting
-        m_leftDriveBack.configContinuousCurrentLimit(35);
-        m_leftDriveBack.configPeakCurrentDuration(250);
-        m_leftDriveBack.configPeakCurrentLimit(50);
-        m_leftDriveBack.configOpenloopRamp(.4);
-
-        m_leftDriveFront.configContinuousCurrentLimit(35);
-        m_leftDriveFront.configPeakCurrentDuration(250);
-        m_leftDriveFront.configPeakCurrentLimit(50);
-        m_leftDriveFront.configOpenloopRamp(.4);
-
-        m_rightDriveBack.configContinuousCurrentLimit(35);
-        m_rightDriveBack.configPeakCurrentDuration(250);
-        m_rightDriveBack.configPeakCurrentLimit(50);
-        m_rightDriveBack.configOpenloopRamp(.4);
-
-        m_rightDriveFront.configContinuousCurrentLimit(35);
-        m_rightDriveFront.configPeakCurrentDuration(250);
-        m_rightDriveFront.configPeakCurrentLimit(50);
-        m_rightDriveFront.configOpenloopRamp(.4);
+        kvLib.setDriveTrainCurrentLimiting(m_leftDriveBack);
+        kvLib.setDriveTrainCurrentLimiting(m_leftDriveFront);
+        kvLib.setDriveTrainCurrentLimiting(m_rightDriveBack);
+        kvLib.setDriveTrainCurrentLimiting(m_rightDriveFront);
 
         // Differential drive
         drive = new DifferentialDrive(leftDrive, rightDrive);
