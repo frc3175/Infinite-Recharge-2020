@@ -43,6 +43,6 @@ public class RobotMap {
     //Trench piston 0 == forward 1 == reverse
     public static final int trenchDirection = 0;
 
-    //Shooter speep
+    //Shooter speed
     public static final double shooterSpeed = 0.0;
 }
