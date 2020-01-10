@@ -15,6 +15,7 @@ public class RobotMap {
     public static final int shooter1ID = 15; // CAN
 
 
+
     //Prototype TalonSRX IDs
     
 
@@ -45,4 +46,5 @@ public class RobotMap {
 
     //Shooter speed
     public static final double shooterSpeed = 0.0;
+
 }
