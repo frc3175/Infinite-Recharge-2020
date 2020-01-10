@@ -16,6 +16,9 @@ public class RobotMap {
     public static final int shooter0ID = 14; // CAN
     public static final int shooter1ID = 15; // CAN
 
+    //Hopper Talon IDs
+    public static final int m_hopperID = 16; // CAN
+
     // Prototype TalonSRX IDs
 
     // Electronic transmission degrade
@@ -46,4 +49,6 @@ public class RobotMap {
     // Shooter speed
     public static final double shooterSpeed = 0.8;
 
+    // Hopper
+    public static final double hopperSpeed = 0.8; 
 }
