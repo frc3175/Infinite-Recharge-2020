@@ -10,6 +10,11 @@ public class RobotMap {
     public static final int m_rightDriveBack = 12; // CAN
     public static final int m_rightDriveFront = 13; // CAN
 
+    //This is the shooter Talon Motor IDs
+    public static final int shooter0ID = 14; // CAN
+    public static final int shooter1ID = 15; // CAN
+
+
     //Prototype TalonSRX IDs
     
 
@@ -37,4 +42,7 @@ public class RobotMap {
 
     //Trench piston 0 == forward 1 == reverse
     public static final int trenchDirection = 0;
+
+    //Shooter speep
+    public static final double shooterSpeed = 0.0;
 }
