@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class KvLib {
 
-    //@param creates public deadband
+    /* @param creates public deadband */
     public static double deadband(double val, double threshold) {
         if (Math.abs(val) < threshold) {
             return 0;

@@ -7,6 +7,7 @@ import frc.robot.lib.RobotMap;
 public class Pneumatics {
 
     private DoubleSolenoid e_piston, t_piston;
+    
 
     
     @SuppressWarnings("all")

@@ -17,7 +17,9 @@ public class RobotMap {
     public static final double transmission = 0.6;
 
     //Drive Controller port
-    public static final int port = 0;
+    public static final int driverPort = 0;
+    //Operator Controller Port
+    public static final int operatorPort = 1;
 
     //drive deadband
     public static final double driveDeadband = 0.2;

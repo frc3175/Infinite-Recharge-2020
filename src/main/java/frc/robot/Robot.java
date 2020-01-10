@@ -9,6 +9,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Operator;
 import frc.robot.lib.RobotMap;
 import frc.robot.lib.KvLib;
 
@@ -23,6 +24,7 @@ public class Robot extends TimedRobot {
   // subclasses
   private Drive drive;
   private KvLib kvLib;
+  private Operator operator;
 
   // Drive controller
   private XboxController driver;
@@ -53,9 +55,18 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
+    /* Subsystems */
     drive = new Drive();
     kvLib = new KvLib();
-    driver = new XboxController(RobotMap.port);
+    operator = new Operator();
+
+
+    /* Initiate Controllers */
+    driver = new XboxController(RobotMap.driverPort);
+    operator.initateOperator();
+
+    /* Pneumatic intiation*/
+
   }
 
   @Override
