@@ -8,6 +8,8 @@ public class Pneumatics {
 
     private DoubleSolenoid e_piston, t_piston;
 
+    
+    @SuppressWarnings("all")
     public void elevatorActuater(boolean pressed) {
         e_piston = new DoubleSolenoid(RobotMap.e_pistonSolenoid_F, RobotMap.e_pistonSolenoid_R);
 
@@ -20,6 +22,7 @@ public class Pneumatics {
         }
     }
 
+    @SuppressWarnings("all")
     public void trenchActuaterForward(boolean pressed) {
         t_piston = new DoubleSolenoid(RobotMap.t_pistonSolenoid_F, RobotMap.t_pistonSolenoid_R);
         if (pressed == true) {
@@ -31,7 +34,8 @@ public class Pneumatics {
         }
 
     }
-
+    
+    @SuppressWarnings("unused")
     public void trenchActuaterReverse(boolean pressed) {
         t_piston = new DoubleSolenoid(RobotMap.t_pistonSolenoid_F, RobotMap.t_pistonSolenoid_R);
         if (pressed == true) {
