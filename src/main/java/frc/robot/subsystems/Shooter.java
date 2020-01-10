@@ -7,8 +7,8 @@ import frc.robot.lib.RobotMap;
 
 public class Shooter {
 
-    private TalonSRX shooter0, shooter1; 
 
+    private TalonSRX shooter0, shooter1; 
 
     public void shooter(boolean pressed) {
 
@@ -27,8 +27,4 @@ public class Shooter {
 
 
     }
-
-
-
-
 }
