@@ -13,7 +13,7 @@ public class Pneumatics {
     public void elevatorActuater(boolean pressed) {
         e_piston = new DoubleSolenoid(RobotMap.e_pistonSolenoid_F, RobotMap.e_pistonSolenoid_R);
 
-        if (pressed == true) {
+        if (pressed) {
             if (RobotMap.elevatorDirection == 0) {
                 e_piston.set(Value.kReverse);
             } else {
@@ -25,7 +25,7 @@ public class Pneumatics {
     @SuppressWarnings("all")
     public void trenchActuaterForward(boolean pressed) {
         t_piston = new DoubleSolenoid(RobotMap.t_pistonSolenoid_F, RobotMap.t_pistonSolenoid_R);
-        if (pressed == true) {
+        if (pressed) {
             if (RobotMap.trenchDirection == 0) {
                 t_piston.set(Value.kForward);
             } else {
@@ -38,7 +38,7 @@ public class Pneumatics {
     @SuppressWarnings("unused")
     public void trenchActuaterReverse(boolean pressed) {
         t_piston = new DoubleSolenoid(RobotMap.t_pistonSolenoid_F, RobotMap.t_pistonSolenoid_R);
-        if (pressed == true) {
+        if (pressed) {
             if (RobotMap.trenchDirection == 1) {
                 t_piston.set(Value.kReverse);
             } else {
@@ -51,7 +51,7 @@ public class Pneumatics {
     public void resetPneumatics(boolean pressed) {
         t_piston = new DoubleSolenoid(RobotMap.t_pistonSolenoid_F, RobotMap.t_pistonSolenoid_R);
         e_piston = new DoubleSolenoid(RobotMap.e_pistonSolenoid_F, RobotMap.e_pistonSolenoid_R);
-        if (pressed == true) {
+        if (pressed) {
             e_piston.set(Value.kReverse);
             t_piston.set(Value.kForward);
         }
