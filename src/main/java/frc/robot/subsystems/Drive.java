@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.drive.*;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import com.kauailabs.navx.frc.AHRS;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import frc.robot.lib.KvLib;
 import frc.robot.lib.RobotMap;
@@ -11,10 +11,7 @@ import frc.robot.lib.RobotMap;
 public class Drive {
 
     // TalonFX Motors
-    public WPI_TalonSRX m_leftDriveBack;
-    private WPI_TalonSRX m_rightDriveBack;
-    private WPI_TalonSRX m_leftDriveFront;
-    private WPI_TalonSRX m_rightDriveFront;
+    private WPI_TalonFX m_leftDriveBack, m_rightDriveBack, m_leftDriveFront, m_rightDriveFront;
     private KvLib kvLib;
 
     private SpeedControllerGroup leftDrive = new SpeedControllerGroup(m_leftDriveFront, m_leftDriveBack);
@@ -31,11 +28,11 @@ public class Drive {
 
         kvLib = new KvLib();
         // left Falcons
-        m_leftDriveBack = new WPI_TalonSRX(RobotMap.m_leftDriveBack);
-        m_leftDriveFront = new WPI_TalonSRX(RobotMap.m_leftDriveFront);
+        m_leftDriveBack = new WPI_TalonFX(RobotMap.m_leftDriveBack);
+        m_leftDriveFront = new WPI_TalonFX(RobotMap.m_leftDriveFront);
         // right Falcons
-        m_rightDriveBack = new WPI_TalonSRX(RobotMap.m_rightDriveBack);
-        m_rightDriveFront = new WPI_TalonSRX(RobotMap.m_rightDriveFront);
+        m_rightDriveBack = new WPI_TalonFX(RobotMap.m_rightDriveBack);
+        m_rightDriveFront = new WPI_TalonFX(RobotMap.m_rightDriveFront);
 
         // @param sets the encoders
         // m_leftDriveBack.configSelectedFeedbackSensor(com.ctre.phoenix.motorcontrol.FeedbackDevice.CTRE_MagEncoder_Relative);

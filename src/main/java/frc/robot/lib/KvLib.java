@@ -1,6 +1,8 @@
 package frc.robot.lib;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import frc.robot.lib.RobotMap;
 
 
@@ -48,10 +50,20 @@ public class KvLib {
          * Current Limits the drivetrain to 35 with a peak of 50 Also contains a ramp of
          * 0.4 Seconds
          */
+        
         motor.enableCurrentLimit(true);
         motor.configContinuousCurrentLimit(35);
         motor.configPeakCurrentDuration(250);
         motor.configPeakCurrentLimit(50);
+        motor.configOpenloopRamp(.4);
+    }
+
+    public void setDriveTrainCurrentLimiting(TalonFX motor) {
+        /*
+         * Current Limits the drivetrain to 35 with a peak of 50 Also contains a ramp of
+         * 0.4 Seconds
+         */
+        motor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 35, 50, 250));
         motor.configOpenloopRamp(.4);
     }
 
