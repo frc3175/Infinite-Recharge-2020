@@ -51,4 +51,11 @@ public class RobotMap {
 
     // Hopper
     public static final double hopperSpeed = 0.8; 
+
+    // ElevatorIDs
+    public static final int elevatorleftID = 17;
+    public static final int elevatorRightID = 18; 
+
+    //Elevator Speed
+    public static final double elevatorSpeed = 0.6;
 }
