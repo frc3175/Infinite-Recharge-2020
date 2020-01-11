@@ -8,8 +8,10 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Operator;
+import frc.robot.subsystems.ShuffleBoard;
 import frc.robot.config.RobotMap;
 import frc.robot.lib.KvLib;
 
@@ -25,6 +27,7 @@ public class Robot extends TimedRobot {
   private Drive drive;
   private KvLib kvLib;
   private Operator operator;
+  private ShuffleBoard shuffleBoard;
   
 
   // Drive controller
@@ -60,6 +63,7 @@ public class Robot extends TimedRobot {
     drive = new Drive();
     kvLib = new KvLib();
     operator = new Operator();
+    shuffleBoard = new ShuffleBoard();
 
 
     /* Initiate Controllers */
@@ -69,16 +73,21 @@ public class Robot extends TimedRobot {
 
   }
 
+
   @Override
   public void teleopPeriodic() {
 
-    /*Operator controls
-    */
+    
+
+    /* ShuffleBoard */
+    shuffleBoard.returnShuffleBoard();
+
+    /*Operator controls*/
     operator.returnCommands();
 
     /* left Y, right X, right shoulder
-
     */
+
     double linearSpeed = kvLib.driveDeadband(-driver.getRawAxis(1));
     double curveSpeed = kvLib.driveDeadband(-driver.getRawAxis(4));
 
