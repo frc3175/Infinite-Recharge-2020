@@ -9,7 +9,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.Drive;
-import frc.robot.subsystems.Operator;
+import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.Shooter;
 import frc.robot.lib.RobotMap;
 import frc.robot.lib.KvLib;
 
@@ -24,10 +25,11 @@ public class Robot extends TimedRobot {
   // subclasses
   private Drive drive;
   private KvLib kvLib;
-  private Operator operator;
+  private Hopper hopper;
+  private Shooter shooter;
 
   // Drive controller
-  private XboxController driver;
+  private XboxController driver, operator;
 
 
   @Override
@@ -58,12 +60,13 @@ public class Robot extends TimedRobot {
     /* Subsystems */
     drive = new Drive();
     kvLib = new KvLib();
-    operator = new Operator();
+    hopper = new Hopper();
+    shooter = new Shooter();
 
 
     /* Initiate Controllers */
     driver = new XboxController(RobotMap.driverPort);
-    operator.initateOperator();
+    operator = new XboxController(RobotMap.operatorPort);
 
     /* Pneumatic intiation*/
 
@@ -71,8 +74,17 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    // left Y, right X, right shoulder
 
+    /*Operator controls
+
+    */
+    hopper.hopper(operator.getAButton());
+    shooter.shooter(operator.getBButton());
+    
+
+    /* left Y, right X, right shoulder
+
+    */
     double linearSpeed = kvLib.driveDeadband(-driver.getRawAxis(1));
     double curveSpeed = kvLib.driveDeadband(-driver.getRawAxis(4));
 
