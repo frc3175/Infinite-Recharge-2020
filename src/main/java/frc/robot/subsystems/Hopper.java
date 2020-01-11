@@ -9,7 +9,7 @@ public class Hopper {
 
     private TalonSRX m_hopper; 
 
-    public void hopper(boolean pressed) {
+    public void hopperSpin(boolean pressed) {
 
         m_hopper = new TalonSRX(RobotMap.m_hopperID); 
 

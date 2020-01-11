@@ -9,7 +9,7 @@ public class Shooter {
 
     private TalonSRX shooter0, shooter1;
 
-    public void shooter(boolean pressed) {
+    public void shooterBoi(boolean pressed) {
 
         shooter0 = new TalonSRX(RobotMap.shooter0ID);
         shooter1 = new TalonSRX(RobotMap.shooter1ID);

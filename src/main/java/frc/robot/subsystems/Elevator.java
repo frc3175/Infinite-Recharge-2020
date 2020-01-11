@@ -10,18 +10,19 @@ public class Elevator {
     private Pneumatics pneumatics;
     private SpeedControllerGroup elevator = new SpeedControllerGroup(this.m_left, this.m_right);
 
-    public void elevator(boolean pressed, boolean move) {
+    public void move(boolean move) {
         this.m_left = new WPI_TalonSRX(RobotMap.elevatorleftID);
         this.m_right = new WPI_TalonSRX(RobotMap.elevatorRightID);
-        pneumatics = new Pneumatics();
-
-        if (pressed) {
-            pneumatics.elevatorActuater(true);
-        }
         if (move) {
             elevator.set(RobotMap.elevatorSpeed);
         } else {
             elevator.set(0);
+        }
+    }
+    public void pistonRelease(boolean piston) {
+        pneumatics = new Pneumatics();
+        if(piston) {
+            pneumatics.elevatorActuater(true);
         }
     }
 }
