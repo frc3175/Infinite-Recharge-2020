@@ -1,8 +1,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.lib.ControllerMap;
-import frc.robot.lib.RobotMap;
+import frc.robot.config.ControllerMap;
+import frc.robot.config.RobotMap;
 
 public class Operator {
 

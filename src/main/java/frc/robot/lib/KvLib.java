@@ -3,7 +3,7 @@ package frc.robot.lib;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import frc.robot.lib.RobotMap;
+import frc.robot.config.RobotMap;
 
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;

@@ -9,10 +9,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.Drive;
-import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Operator;
-import frc.robot.subsystems.Shooter;
-import frc.robot.lib.RobotMap;
+import frc.robot.config.RobotMap;
 import frc.robot.lib.KvLib;
 
 /*

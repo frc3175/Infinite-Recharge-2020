@@ -1,4 +1,4 @@
-package frc.robot.lib;
+package frc.robot.config;
 
 public class ControllerMap {
 
@@ -13,8 +13,6 @@ public class ControllerMap {
     7 = BACK Button
     8 = START Button
     */
-
-
 
     public static final int HopperButton = 1;
 

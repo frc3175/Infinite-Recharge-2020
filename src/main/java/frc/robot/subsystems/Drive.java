@@ -6,7 +6,7 @@ import com.kauailabs.navx.frc.AHRS;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import frc.robot.lib.KvLib;
-import frc.robot.lib.RobotMap;
+import frc.robot.config.RobotMap;
 
 public class Drive {
 
