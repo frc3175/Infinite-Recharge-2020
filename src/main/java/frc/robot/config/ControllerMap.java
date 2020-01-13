@@ -22,6 +22,4 @@ public class ControllerMap {
 
     public static final int ElevatorButton = 4;
 
-
-    
 }

@@ -7,20 +7,20 @@ import frc.robot.config.RobotMap;
 
 public class Shooter {
 
-    private TalonSRX shooter0, shooter1;
+    private TalonSRX m_shooterTop, m_shooterBottom;
 
     public void shooterBoi(boolean pressed) {
 
-        shooter0 = new TalonSRX(RobotMap.shooter0ID);
-        shooter1 = new TalonSRX(RobotMap.shooter1ID);
+        m_shooterTop = new TalonSRX(RobotMap.topMotorID);
+        m_shooterBottom = new TalonSRX(RobotMap.bottomMotorID);
 
         if (pressed) {
-            shooter0.set(ControlMode.PercentOutput, RobotMap.shooterSpeed);
-            shooter1.set(ControlMode.PercentOutput, -RobotMap.shooterSpeed);
+            m_shooterTop.set(ControlMode.PercentOutput, RobotMap.shooterSpeed_TopMotor);
+            m_shooterBottom.set(ControlMode.PercentOutput, -RobotMap.shooterSpeed_BottomMotor);
         } else {
 
-            shooter0.set(ControlMode.PercentOutput, 0);
-            shooter1.set(ControlMode.PercentOutput, 0);
+            m_shooterTop.set(ControlMode.PercentOutput, 0);
+            m_shooterBottom.set(ControlMode.PercentOutput, 0);
         }
 
     }

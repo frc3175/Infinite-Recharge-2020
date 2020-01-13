@@ -13,8 +13,8 @@ public class RobotMap {
     // Shooter Talon Motor IDs
 
     // This is the shooter Talon Motor IDs
-    public static final int shooter0ID = 14; // CAN
-    public static final int shooter1ID = 15; // CAN
+    public static final int topMotorID = 14; // CAN
+    public static final int bottomMotorID = 15; // CAN
 
     //Hopper Talon IDs
     public static final int m_hopperID = 16; // CAN
@@ -47,7 +47,8 @@ public class RobotMap {
     public static final int trenchDirection = 0;
 
     // Shooter speed
-    public static final double shooterSpeed = 0.8;
+    public static final double shooterSpeed_TopMotor = 0.75;
+    public static final double shooterSpeed_BottomMotor = 1;
 
     // Hopper
     public static final double hopperSpeed = 0.8; 
