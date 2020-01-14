@@ -33,12 +33,6 @@ public class Drive {
     public Drive() {
 
         kvLib = new KvLib();
-        // left Falcons
-        m_leftDriveBack = new WPI_TalonFX(RobotMap.m_leftDriveBack);
-        m_leftDriveFront = new WPI_TalonFX(RobotMap.m_leftDriveFront);
-        // right Falcons
-        m_rightDriveBack = new WPI_TalonFX(RobotMap.m_rightDriveBack);
-        m_rightDriveFront = new WPI_TalonFX(RobotMap.m_rightDriveFront);
 
         // @param sets the encoders
         // m_leftDriveBack.configSelectedFeedbackSensor(com.ctre.phoenix.motorcontrol.FeedbackDevice.CTRE_MagEncoder_Relative);
