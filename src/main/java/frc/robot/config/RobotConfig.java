@@ -24,4 +24,5 @@ public class RobotConfig {
 
     //Elevator Speed
     public static final double elevatorSpeed = 0.6;
+
 }

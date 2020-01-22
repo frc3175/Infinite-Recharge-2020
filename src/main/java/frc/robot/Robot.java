@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Operator;
 import frc.robot.util.LEDs;
-import frc.robot.util.Pneumatics;
+import frc.robot.subsystems.Pneumatics;
 import frc.robot.util.ShuffleBoard;
 import frc.robot.config.ElectricalConstants;
 import frc.robot.lib.KvLib;

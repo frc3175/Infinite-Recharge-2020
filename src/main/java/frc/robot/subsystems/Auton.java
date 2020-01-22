@@ -20,11 +20,16 @@ public class Auton {
 
     private Drive drive;
     private AHRS s_NavX;
-    private int autonState;
+    private Shooter shooter;
+    private Timer timer;
+    private int autonState = 0;
 
     public Auton() {
-        drive = new Drive();
-        s_NavX = new AHRS(Port.kMXP);
+
+        // subsystems
+        this.drive = new Drive();
+        this.shooter = new Shooter();
+        this.s_NavX = new AHRS(Port.kMXP);
 
         this.m_leftDriveBack = new WPI_TalonFX(ElectricalConstants.m_leftDriveBack);
         this.m_leftDriveFront = new WPI_TalonFX(ElectricalConstants.m_leftDriveFront);
@@ -34,28 +39,129 @@ public class Auton {
         m_leftDriveBack.follow(m_leftDriveFront);
         m_rightDriveBack.follow(m_rightDriveFront);
         // runtime timer
-        Timer runTime = new Timer();
+        timer = new Timer();
 
     }
 
-    public void periodic() {
-        int averageDistance = (m_leftDriveBack.getSelectedSensorPosition() + m_rightDriveBack.getSelectedSensorPosition()) / 2;
-        // forward 2
-        if (averageDistance <= 2048 && autonState == 0) {
-            drive.tankDrive(1, 1);
-            autonState++;
-            m_leftDriveBack.setSelectedSensorPosition(0);
-            m_rightDriveBack.setSelectedSensorPosition(0);
-            s_NavX.reset();
-            if (autonState == 0 && s_NavX.getAngle() < -10) {
-                drive.tankDrive(0.3, 0);
-            } else if (autonState == 0 && s_NavX.getAngle() > 10) {
-                drive.tankDrive(0, 0.3);
+    // One wheel rotation = ~12,000 ticks
+
+    public void shootBalls() {
+        if (autonState == 0) {
+            timer.start();
+            // do code
+            shooter.shooterBoi(true);
+            if (timer.hasPeriodPassed(2.5)) {
+                timer.stop();
+                timer.reset();
+                autonState++;
             }
-        } 
-        if (autonState == 1 && m_leftDriveBack.getSelectedSensorPosition() < 1024 || s_NavX.getAngle() < 90) {
-            drive.tankDrive(0.5, 0);
-            autonState++;
-        } 
+        }
+    }
+
+    public void turn45() {
+
+        if (autonState == 1) {
+            // Do code
+            if (s_NavX.getAngle() < 45) {
+                drive.tankDrive(0.3, 0);
+            } else {
+                drive.tankDrive(0, 0);
+                m_rightDriveBack.setSelectedSensorPosition(0);
+                m_leftDriveBack.setSelectedSensorPosition(0);
+                autonState++;
+            }
+        }
+    }
+
+    public void goStraight() {
+
+        if (autonState == 2) {
+            // Do code
+            if (m_leftDriveBack.getSelectedSensorPosition() < 36000
+                    && m_rightDriveBack.getSelectedSensorPosition() < 36000) {
+                drive.tankDrive(1, 1);
+            } else {
+                drive.tankDrive(0, 0);
+                autonState++;
+            }
+        }
+    }
+
+    public void turn45Opposite() {
+
+        if (autonState == 3) {
+            // Do code
+            if (s_NavX.getAngle() > 0) {
+                drive.tankDrive(0, 0.3);
+            } else {
+                drive.tankDrive(0, 0);
+                autonState++;
+            }
+        }
+    }
+
+    public void goStraight2() {
+
+        if (autonState == 4) {
+            // Do code
+            if (m_leftDriveBack.getSelectedSensorPosition() < 36000
+                    && m_rightDriveBack.getSelectedSensorPosition() < 36000) {
+                drive.tankDrive(1, 1);
+            } else {
+                drive.tankDrive(0, 0);
+                m_rightDriveBack.setSelectedSensorPosition(0);
+                m_leftDriveBack.setSelectedSensorPosition(0);
+                autonState++;
+            }
+
+        }
+
+    }
+
+    public void reverseBack() {
+
+        if (autonState == 5) {
+            // Do code
+            if (m_rightDriveBack.getSelectedSensorPosition() > -36000
+                    && m_leftDriveBack.getSelectedSensorPosition() > -36000) {
+                drive.tankDrive(-1, -1);
+            } else {
+                drive.tankDrive(0, 0);
+                autonState++;
+            }
+        }
+
+    }
+
+    public void turn180() {
+
+        if (autonState == 6) {
+            // Do code
+            if (s_NavX.getAngle() < 180) {
+                drive.tankDrive(0.8, 0);
+            } else {
+                drive.tankDrive(0, 0);
+                autonState++;
+            }
+
+        }
+
+    }
+
+    public void shootBalls2() {
+
+        if (autonState == 7) {
+            // Do code
+            timer.start();
+            // do code
+            shooter.shooterBoi(true);
+            if (timer.hasPeriodPassed(2.5)) {
+                timer.stop();
+                timer.reset();
+                autonState++;
+
+            }
+
+        }
     }
 }

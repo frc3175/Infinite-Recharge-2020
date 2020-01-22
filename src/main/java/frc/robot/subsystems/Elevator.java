@@ -4,7 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import frc.robot.config.ElectricalConstants;
 import frc.robot.config.RobotConfig;
-import frc.robot.util.Pneumatics;
+import frc.robot.subsystems.Pneumatics;
 
 public class Elevator {
 
