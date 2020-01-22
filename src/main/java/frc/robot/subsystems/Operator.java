@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.config.ControllerMap;
-import frc.robot.config.RobotMap;
+import frc.robot.config.ElectricalConstants;
 
 public class Operator {
 
@@ -12,33 +12,56 @@ public class Operator {
     private Shooter shooter;
     private Elevator elevator;
 
-    @SuppressWarnings("all")
-    public void returnCommands() {
-        operator = new XboxController(RobotMap.operatorPort);
+    public Operator() {
+        this.operator = new XboxController(ElectricalConstants.operatorPort);
 
-        //subsystems
-        hopper = new Hopper();
-        shooter = new Shooter();
-        elevator = new Elevator();
+        // subsystems
+        this.hopper = new Hopper();
+        this.shooter = new Shooter();
+        this.elevator = new Elevator();
+    }
 
-        //Operator Commands
-        if(operator.getRawButton(ControllerMap.HopperButton)) {
+    private boolean getHopperPressed() {
+        return operator.getRawButton(ControllerMap.HopperButton);
+    }
+
+    public void hopperSpin() {
+        if (getHopperPressed()) {
             hopper.hopperSpin(true);
         } else {
             hopper.hopperSpin(false);
         }
-        if(operator.getRawButton(ControllerMap.ShooterButton)) {
+    }
+
+    private boolean getShooterButton() {
+        return operator.getRawButton(ControllerMap.ShooterButton);
+    }
+
+    public void shooter() {
+        if (getShooterButton()) {
             shooter.shooterBoi(true);
         } else {
             shooter.shooterBoi(false);
         }
-        if(operator.getRawButton(ControllerMap.PistonReleaseButton)) {
-            elevator.pistonRelease(true);
-        }
-        if(operator.getRawButton(ControllerMap.ElevatorButton)) {
+    }
+
+    private boolean getElevatorButton() {
+        return operator.getRawButton(ControllerMap.ElevatorButton);
+    }
+
+    public void elevator() {
+        if (getElevatorButton()) {
             elevator.move(true);
         } else {
             elevator.move(false);
+        }
+    }
+    private boolean getPistonButton() {
+        return operator.getRawButton(ControllerMap.PistonReleaseButton);
+    }
+    public void pistonRelease() {
+        if(getPistonButton()) {
+            elevator.pistonRelease(true);
         }
     }
 }

@@ -2,8 +2,9 @@ package frc.robot.lib;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import frc.robot.config.RobotMap;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
+import frc.robot.config.RobotConfig;
 
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -19,7 +20,7 @@ public class KvLib {
     }
 
     public double driveDeadband(double val) {
-        if (Math.abs(val) < RobotMap.driveDeadband) {
+        if (Math.abs(val) < RobotConfig.driveDeadband) {
             return 0;
         }
         return val;
@@ -58,7 +59,7 @@ public class KvLib {
         motor.configOpenloopRamp(.4);
     }
 
-    public void setDriveTrainCurrentLimiting(TalonFX motor) {
+    public void setDriveTrainCurrentLimiting(WPI_TalonFX motor) {
         /*
          * Current Limits the drivetrain to 35 with a peak of 50 Also contains a ramp of
          * 0.4 Seconds

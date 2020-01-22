@@ -10,8 +10,10 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Operator;
-import frc.robot.subsystems.ShuffleBoard;
-import frc.robot.config.RobotMap;
+import frc.robot.util.LEDs;
+import frc.robot.util.Pneumatics;
+import frc.robot.util.ShuffleBoard;
+import frc.robot.config.ElectricalConstants;
 import frc.robot.lib.KvLib;
 
 /*
@@ -22,10 +24,12 @@ public class Robot extends TimedRobot {
 
   // public config
 
-  // subclasses
+  // subsystems
   private Drive drive;
   private KvLib kvLib;
   private Operator operator;
+  private LEDs leds;
+  private Pneumatics pneumatics;
   private ShuffleBoard shuffleBoard;
   
 
@@ -59,37 +63,51 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     /* Subsystems */
-    drive = new Drive();
-    kvLib = new KvLib();
-    operator = new Operator();
-    shuffleBoard = new ShuffleBoard();
+    this.drive = new Drive();
+    this.kvLib = new KvLib();
+    this.operator = new Operator();
+    this.pneumatics = new Pneumatics();
+    this.leds = new LEDs();
+    this.shuffleBoard = new ShuffleBoard();
+    
 
+    //resets
+    drive.reset();
+    drive.calibrate();
 
     /* Initiate Controllers */
-    driver = new XboxController(RobotMap.driverPort);
+    driver = new XboxController(ElectricalConstants.driverPort);
 
     /* Pneumatic intiation*/
+    pneumatics.initializeCompressor(true);
 
   }
 
+  
+  //Run this to reset Pneumatic pistons
+  @Override
+  public void testPeriodic() {
+    pneumatics.resetPneumatics(true);
+  }
 
   @Override
   public void teleopPeriodic() {
 
-    
+    //LEDs
+    leds.putData();
+    leds.rainbow();
 
     /* ShuffleBoard */
-    shuffleBoard.returnShuffleBoard();
+    shuffleBoard.shuffleBoardMatchTime();
 
-    /*Operator controls*/
-    operator.returnCommands();
+    /* Operator Commands */
+    operator.hopperSpin();
+    operator.shooter();
+    operator.elevator();
 
-    /* left Y, right X, right shoulder
-    */
-
-    double linearSpeed = kvLib.driveDeadband(-driver.getRawAxis(1));
+    /*Drive commands*/
+    double linearSpeed = kvLib.driveDeadband(driver.getRawAxis(1));
     double curveSpeed = kvLib.driveDeadband(-driver.getRawAxis(4));
-
     drive.move(linearSpeed, curveSpeed, driver.getRawButton(6));
   }
 }
