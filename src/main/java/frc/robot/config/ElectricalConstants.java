@@ -42,6 +42,9 @@ public class ElectricalConstants {
     public static final int TestingMotor1 = 19;
     public static final int TestingMotor2 = 20;
     public static final int TestingMotor3 = 21;
+
+    //servo
+    public static final int ServoID = 1;
     
 
 }
