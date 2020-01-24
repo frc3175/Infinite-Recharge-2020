@@ -104,6 +104,7 @@ public class Robot extends TimedRobot {
     operator.hopperSpin();
     operator.shooter();
     operator.elevator();
+    operator.cameraServo();
 
     /*Drive commands*/
     double linearSpeed = kvLib.driveDeadband(driver.getRawAxis(1));

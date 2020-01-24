@@ -64,4 +64,17 @@ public class Operator {
             elevator.pistonRelease(true);
         }
     }
+
+    private Trench trench = new Trench();
+
+    private boolean getCameraButton() {
+        return operator.getRawButton(ControllerMap.CameraButton);
+    }
+    public void cameraServo() {
+        if(getCameraButton()) {
+            trench.cameraRotation(true);
+        } else {
+            trench.cameraRotation(false);
+        }
+    }
 }
