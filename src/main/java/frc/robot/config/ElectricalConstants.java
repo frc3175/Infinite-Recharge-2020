@@ -37,6 +37,11 @@ public class ElectricalConstants {
 
     //LED PWM port
     public static final int LED_Port = 9;
+
+    //Testing Motor Constants
+    public static final int TestingMotor1 = 19;
+    public static final int TestingMotor2 = 20;
+    public static final int TestingMotor3 = 21;
     
 
 }
