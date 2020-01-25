@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -11,18 +12,17 @@ import frc.robot.config.ElectricalConstants;
 import frc.robot.config.RobotConfig;
 import frc.robot.lib.KvLib;
 
-
 //TODO: Change TalonSRXs to FXs
 public class Drive {
 
     // TalonFX Motors
-    private WPI_TalonSRX m_leftDriveBack, m_rightDriveBack, m_leftDriveFront, m_rightDriveFront;
+    public WPI_TalonSRX m_leftDriveSlave, m_rightDriveSlave, m_leftDriveMaster, m_rightDriveMaster;
     private KvLib kvLib;
 
-    SpeedController leftDriveFrController = new WPI_TalonSRX(ElectricalConstants.m_leftDriveFront);
-    SpeedController leftDriveBackController = new WPI_TalonSRX(ElectricalConstants.m_leftDriveBack);
-    SpeedController rightDriveFrController = new WPI_TalonSRX(ElectricalConstants.m_rightDriveFront);
-    SpeedController rightDriveBackController = new WPI_TalonSRX(ElectricalConstants.m_rightDriveBack);
+    SpeedController leftDriveFrController = new WPI_TalonSRX(ElectricalConstants.m_leftDriveMaster);
+    SpeedController leftDriveBackController = new WPI_TalonSRX(ElectricalConstants.m_leftDriveSlave);
+    SpeedController rightDriveFrController = new WPI_TalonSRX(ElectricalConstants.m_rightDriveMaster);
+    SpeedController rightDriveBackController = new WPI_TalonSRX(ElectricalConstants.m_rightDriveSlave);
 
     private SpeedControllerGroup leftDrive = new SpeedControllerGroup(leftDriveFrController, leftDriveBackController);
     private SpeedControllerGroup rightDrive = new SpeedControllerGroup(rightDriveFrController, rightDriveBackController);
@@ -34,34 +34,36 @@ public class Drive {
 
     public Drive() {
 
-        this.m_leftDriveBack = new WPI_TalonSRX(ElectricalConstants.m_leftDriveBack);
-        this.m_leftDriveFront = new WPI_TalonSRX(ElectricalConstants.m_leftDriveFront);
-        this.m_rightDriveBack = new WPI_TalonSRX(ElectricalConstants.m_rightDriveBack);
-        this.m_rightDriveFront = new WPI_TalonSRX(ElectricalConstants.m_rightDriveFront);
-        
+        this.m_leftDriveSlave = new WPI_TalonSRX(ElectricalConstants.m_leftDriveSlave);
+        this.m_leftDriveMaster = new WPI_TalonSRX(ElectricalConstants.m_leftDriveMaster);
+        this.m_rightDriveSlave = new WPI_TalonSRX(ElectricalConstants.m_rightDriveSlave);
+        this.m_rightDriveMaster = new WPI_TalonSRX(ElectricalConstants.m_rightDriveMaster);
+
+        m_leftDriveSlave.follow(m_leftDriveMaster);
+        m_rightDriveSlave.follow(m_rightDriveMaster);
+
         this.s_NavX = new AHRS(Port.kMXP);
         this.kvLib = new KvLib();
 
-
         // Current limiting
-        
-        //TODO: Current limiting does not work
+
+        // TODO: Current limiting does not work
         /*
-        kvLib.setDriveTrainCurrentLimiting(m_leftDriveBack);
-        kvLib.setDriveTrainCurrentLimiting(m_leftDriveFront);
-        kvLib.setDriveTrainCurrentLimiting(m_rightDriveBack);
-        kvLib.setDriveTrainCurrentLimiting(m_rightDriveFront);
-        */
+         * kvLib.setDriveTrainCurrentLimiting(m_leftDriveBack);
+         * kvLib.setDriveTrainCurrentLimiting(m_leftDriveFront);
+         * kvLib.setDriveTrainCurrentLimiting(m_rightDriveBack);
+         * kvLib.setDriveTrainCurrentLimiting(m_rightDriveFront);
+         */
         // Differential drive
         drive = new DifferentialDrive(leftDrive, rightDrive);
     }
 
     // @param resets the drive encoders
     public void reset() {
-        m_leftDriveBack.setSelectedSensorPosition(0);
-        m_leftDriveFront.setSelectedSensorPosition(0);
-        m_rightDriveBack.setSelectedSensorPosition(0);
-        m_rightDriveFront.setSelectedSensorPosition(0);
+        m_leftDriveSlave.setSelectedSensorPosition(0);
+        m_leftDriveMaster.setSelectedSensorPosition(0);
+        m_rightDriveSlave.setSelectedSensorPosition(0);
+        m_rightDriveMaster.setSelectedSensorPosition(0);
     }
 
     public void move(double linearSpeed, double curveSpeed, boolean quickT) {
@@ -75,8 +77,17 @@ public class Drive {
     public void calibrate() {
         this.s_NavX.reset();
     }
-    
+
     public void tankDrive(double leftSpeed, double rightSpeed) {
         drive.tankDrive(leftSpeed, rightSpeed);
+    }
+
+    /**
+     * Drive using two TalonSRX and adjustment values for horizontal and distance
+     * correction
+     */
+    public static void flyWithWires(WPI_TalonSRX starboard, WPI_TalonSRX port, double heading, double throttle) {
+        starboard.set(ControlMode.Velocity, -1 * heading - throttle); // Set the starboard drivetrain motor to the steering power requirement added to the base speed
+        port.set(ControlMode.Velocity, -1 * heading + throttle); // Does the same but on the other side
     }
 }

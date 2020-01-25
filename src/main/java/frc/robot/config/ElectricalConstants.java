@@ -3,12 +3,12 @@ package frc.robot.config;
 public class ElectricalConstants {
 
     // Left Motor IDs
-    public static final int m_leftDriveBack = 10; // CAN
-    public static final int m_leftDriveFront = 11; // CAN
+    public static final int m_leftDriveSlave = 10; // CAN
+    public static final int m_leftDriveMaster = 11; // CAN
 
     // right motor IDs
-    public static final int m_rightDriveBack = 12; // CAN
-    public static final int m_rightDriveFront = 13; // CAN
+    public static final int m_rightDriveSlave = 12; // CAN
+    public static final int m_rightDriveMaster = 13; // CAN
 
     // Shooter Talon Motor IDs
 
