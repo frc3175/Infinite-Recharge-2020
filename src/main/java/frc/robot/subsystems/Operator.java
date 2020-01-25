@@ -56,12 +56,21 @@ public class Operator {
             elevator.move(false);
         }
     }
+
     private boolean getPistonButton() {
         return operator.getRawButton(ControllerMap.PistonReleaseButton);
     }
+
     public void pistonRelease() {
-        if(getPistonButton()) {
+        if (getPistonButton()) {
             elevator.pistonRelease(true);
         }
+    }
+
+    public boolean getLimelightTrenchAlignButton() {
+        return operator.getRawButton(ControllerMap.LimelightTrenchAlignButton);
+    }
+    public boolean getLimelightLineAlignButton() {
+        return operator.getRawButton(ControllerMap.LimelightLineAlignButton);
     }
 }

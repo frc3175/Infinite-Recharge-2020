@@ -22,4 +22,8 @@ public class ControllerMap {
 
     public static final int ElevatorButton = 4;
 
+    public static final int LimelightTrenchAlignButton = 5;
+
+    public static final int LimelightLineAlignButton = 6;
+
 }

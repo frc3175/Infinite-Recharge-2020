@@ -6,9 +6,15 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Operator;
 import frc.robot.util.LEDs;
 import frc.robot.subsystems.Pneumatics;
@@ -31,34 +37,26 @@ public class Robot extends TimedRobot {
   private LEDs leds;
   private Pneumatics pneumatics;
   private ShuffleBoard shuffleBoard;
-  
+  private Limelight limelight;
 
   // Drive controller
   private XboxController driver;
 
-
   @Override
-	public void autonomousInit() {
+  public void autonomousInit() {
 
   }
 
   @Override
-	public void autonomousPeriodic() {
-	/*	if (autonMode.equals("cross")) {
-			if (runTime.get() < 2) {
-				driveTrain.arcadeDrive(0.75, 0);
-			}
-		} else if (autonMode.equals("switch")) {
-			if ((field.charAt(0) == 'L' && LOCATION == 0) || (field.charAt(0) == 'R' && LOCATION == 1)) {
-				// 0 is left, 1 is right
-				switchDump();
-			} else {
-				if (runTime.get() < 1.5) {
-					driveTrain.arcadeDrive(0.75, 0);
-				}
-			}
-		} */ 
-	}
+  public void autonomousPeriodic() {
+    /*
+     * if (autonMode.equals("cross")) { if (runTime.get() < 2) {
+     * driveTrain.arcadeDrive(0.75, 0); } } else if (autonMode.equals("switch")) {
+     * if ((field.charAt(0) == 'L' && LOCATION == 0) || (field.charAt(0) == 'R' &&
+     * LOCATION == 1)) { // 0 is left, 1 is right switchDump(); } else { if
+     * (runTime.get() < 1.5) { driveTrain.arcadeDrive(0.75, 0); } } }
+     */
+  }
 
   @Override
   public void robotInit() {
@@ -68,32 +66,36 @@ public class Robot extends TimedRobot {
     this.operator = new Operator();
     this.pneumatics = new Pneumatics();
     this.leds = new LEDs();
+    this.limelight = new Limelight();
     this.shuffleBoard = new ShuffleBoard();
-    
 
-    //resets
+    // resets
     drive.reset();
     drive.calibrate();
 
     /* Initiate Controllers */
     driver = new XboxController(ElectricalConstants.driverPort);
 
-    /* Pneumatic intiation*/
+    /* Pneumatic intiation */
     pneumatics.initializeCompressor(true);
 
   }
 
-  
-  //Run this to reset Pneumatic pistons
+  // Run this to reset Pneumatic pistons
   @Override
   public void testPeriodic() {
     pneumatics.resetPneumatics(true);
   }
 
   @Override
+  public void robotPeriodic() {
+    limelight.limelightTargetControl(operator.getLimelightTrenchAlignButton(), operator.getLimelightLineAlignButton());
+  }
+
+  @Override
   public void teleopPeriodic() {
 
-    //LEDs
+    // LEDs
     leds.putData();
     leds.rainbow();
 
@@ -105,9 +107,11 @@ public class Robot extends TimedRobot {
     operator.shooter();
     operator.elevator();
 
-    /*Drive commands*/
-    double linearSpeed = kvLib.driveDeadband(driver.getRawAxis(1));
-    double curveSpeed = kvLib.driveDeadband(-driver.getRawAxis(4));
-    drive.move(linearSpeed, curveSpeed, driver.getRawButton(6));
+    /* Drive commands */
+    if (limelight.driveMode == 0) {
+      double linearSpeed = kvLib.driveDeadband(driver.getRawAxis(1));
+      double curveSpeed = kvLib.driveDeadband(-driver.getRawAxis(4));
+      drive.move(linearSpeed, curveSpeed, driver.getRawButton(6));
+    }
   }
 }
