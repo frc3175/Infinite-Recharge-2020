@@ -66,11 +66,24 @@ public class Operator {
             elevator.pistonRelease(true);
         }
     }
-
+  
     public boolean getLimelightTrenchAlignButton() {
         return operator.getRawButton(ControllerMap.LimelightTrenchAlignButton);
+      
     }
+  
     public boolean getLimelightLineAlignButton() {
         return operator.getRawButton(ControllerMap.LimelightLineAlignButton);
+    private Trench trench = new Trench();
+
+    private boolean getCameraButton() {
+        return operator.getRawButton(ControllerMap.CameraButton);
+    }
+    public void cameraServo() {
+        if(getCameraButton()) {
+            trench.cameraRotation(true);
+        } else {
+            trench.cameraRotation(false);
+        }
     }
 }

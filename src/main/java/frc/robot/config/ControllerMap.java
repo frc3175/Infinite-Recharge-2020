@@ -25,5 +25,6 @@ public class ControllerMap {
     public static final int LimelightTrenchAlignButton = 5;
 
     public static final int LimelightLineAlignButton = 6;
-
+  
+    public static final int CameraButton = 7;
 }

@@ -106,6 +106,7 @@ public class Robot extends TimedRobot {
     operator.hopperSpin();
     operator.shooter();
     operator.elevator();
+    operator.cameraServo();
 
     /* Drive commands */
     if (limelight.driveMode == 0) {
