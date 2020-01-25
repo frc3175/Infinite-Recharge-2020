@@ -11,6 +11,7 @@ public class Operator {
     private Hopper hopper;
     private Shooter shooter;
     private Elevator elevator;
+    private Trench trench;
 
     public Operator() {
         this.operator = new XboxController(ElectricalConstants.operatorPort);
@@ -19,6 +20,7 @@ public class Operator {
         this.hopper = new Hopper();
         this.shooter = new Shooter();
         this.elevator = new Elevator();
+        this.trench = new Trench();
     }
 
     private boolean getHopperPressed() {
@@ -66,21 +68,20 @@ public class Operator {
             elevator.pistonRelease(true);
         }
     }
-  
+    
     public boolean getLimelightTrenchAlignButton() {
         return operator.getRawButton(ControllerMap.LimelightTrenchAlignButton);
-      
+
     }
-  
     public boolean getLimelightLineAlignButton() {
         return operator.getRawButton(ControllerMap.LimelightLineAlignButton);
-    private Trench trench = new Trench();
-
+    }
     private boolean getCameraButton() {
         return operator.getRawButton(ControllerMap.CameraButton);
     }
+
     public void cameraServo() {
-        if(getCameraButton()) {
+        if (getCameraButton()) {
             trench.cameraRotation(true);
         } else {
             trench.cameraRotation(false);
