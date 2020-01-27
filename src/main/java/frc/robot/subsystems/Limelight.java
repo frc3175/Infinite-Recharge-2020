@@ -42,23 +42,26 @@ public class Limelight {
     @SuppressWarnings("all")
     public void limelightTargetControl(boolean pressedTrench, boolean pressedLine) {
 
-        // Vision tracking with 7 and 8 on the drive stick
+        // Vision tracking with two buttons on the operator stick
         if (pressedTrench) {
             driveMode = 1;
             table.getEntry("camMode").setNumber(0); // Tracking mode
             table.getEntry("ledMode").setNumber(3); // LEDs on
-            table.getEntry("pipeline").setNumber(3); // Pipeline 3
+            table.getEntry("pipeline").setNumber(1); // Pipeline 1
+
             if (limelight.hasAnyTarget()) {
                 double currentDistance = Mathematics.countDistance(y, LimelightConstants.heightDifference); // Distance from target
                 double distanceDifference = Mathematics.calcPulses(LimelightConstants.TrenchDistance) - Mathematics.calcPulses(currentDistance); // Difference in distance (error)
                 double distanceAdjust = distanceDifference / LimelightConstants.navigationTime; // Calculates a distance adjustment based on error
                 double steeringAdjust = LimelightConstants.angularScaleUp * x; // Creates a side-to-side adjustment based on error
                 Drive.flyWithWires(drive.m_rightDriveMaster, drive.m_leftDriveMaster, steeringAdjust, distanceAdjust * LimelightConstants.distanceScaleUp); // Drive using adjustment values
+
             } else if (pressedLine) {
                 driveMode = 1;
                 table.getEntry("camMode").setNumber(0); // Tracking mode
                 table.getEntry("ledMode").setNumber(3); // LEDs on
-                table.getEntry("pipeline").setNumber(3); // Pipeline 3
+                table.getEntry("pipeline").setNumber(2); // Pipeline 2
+
                 if (limelight.hasAnyTarget()) {
                     double currentDistance = Mathematics.countDistance(y, LimelightConstants.heightDifference); // Distance from target
                     double distanceDifference = Mathematics.calcPulses(LimelightConstants.LineDistance) - Mathematics.calcPulses(currentDistance); // Difference in distance (error)
@@ -66,10 +69,11 @@ public class Limelight {
                     double steeringAdjust = LimelightConstants.angularScaleUp * x; // Creates a side-to-side adjustment based on error
                     drive.flyWithWires(drive.m_rightDriveMaster, drive.m_leftDriveMaster, steeringAdjust, distanceAdjust * LimelightConstants.distanceScaleUp); // Drive using adjustment values
                 }
+
             } else {
                 table.getEntry("camMode").setNumber(1); // Camera mode
                 table.getEntry("ledMode").setNumber(1); // LEDs off
-                table.getEntry("pipeline").setNumber(4); // Pipeline 4
+                table.getEntry("pipeline").setNumber(3); // Pipeline 3
                 LimelightConstants.filterValue = 1000; // Reset filter value
                 driveMode = 0;
             }

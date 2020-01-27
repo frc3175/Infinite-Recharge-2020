@@ -3,7 +3,7 @@ package frc.robot.config;
 public class RobotConfig {
 
     // Electronic transmission degrade
-    public static final double transmission = 0.6;
+    public static final double transmission = 1;
 
     // drive deadband
     public static final double driveDeadband = 0.2;

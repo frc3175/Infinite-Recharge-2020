@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Operator;
@@ -60,7 +61,8 @@ public class Robot extends TimedRobot {
     this.drive = new Drive();
     this.kvLib = new KvLib();
     this.operator = new Operator();
-    this.pneumatics = new Pneumatics();
+    //TODO: Turn on Pneumatics
+    //this.pneumatics = new Pneumatics();
     this.leds = new LEDs();
     this.limelight = new Limelight();
     this.shuffleBoard = new ShuffleBoard();
@@ -73,7 +75,7 @@ public class Robot extends TimedRobot {
     driver = new XboxController(ElectricalConstants.driverPort);
 
     /* Pneumatic intiation */
-    pneumatics.initializeCompressor(true);
+    //pneumatics.initializeCompressor(true);
 
   }
 
@@ -85,6 +87,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+    LiveWindow.disableAllTelemetry();
     limelight.limelightTargetControl(operator.getLimelightTrenchAlignButton(), operator.getLimelightLineAlignButton());
   }
 
@@ -92,8 +95,9 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
 
     // LEDs
-    leds.putData();
-    leds.rainbow();
+    //TODO: Optimize this
+    //leds.putData();
+    //leds.rainbow();
 
     /* ShuffleBoard */
     shuffleBoard.shuffleBoardMatchTime();
@@ -105,10 +109,10 @@ public class Robot extends TimedRobot {
     operator.cameraServo();
 
     /* Drive commands */
-    if (limelight.driveMode == 0) {
+    // if (limelight.driveMode == 0) {
       double linearSpeed = kvLib.driveDeadband(driver.getRawAxis(1));
       double curveSpeed = kvLib.driveDeadband(-driver.getRawAxis(4));
       drive.move(linearSpeed, curveSpeed, driver.getRawButton(6));
-    }
+    //}
   }
 }

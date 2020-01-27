@@ -3,11 +3,11 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.Servo;
 import frc.robot.config.ElectricalConstants;
 
-public class Trench {
+public class WheelOfFortune {
 
     private Servo servo;
 
-    public Trench() {
+    public WheelOfFortune() {
         servo = new Servo(ElectricalConstants.ServoID);
     }
 

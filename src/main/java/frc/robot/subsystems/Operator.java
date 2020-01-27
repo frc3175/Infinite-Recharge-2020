@@ -11,7 +11,7 @@ public class Operator {
     private Hopper hopper;
     private Shooter shooter;
     private Elevator elevator;
-    private Trench trench;
+    private WheelOfFortune wheelOfFortune;
 
     public Operator() {
         this.operator = new XboxController(ElectricalConstants.operatorPort);
@@ -20,7 +20,7 @@ public class Operator {
         this.hopper = new Hopper();
         this.shooter = new Shooter();
         this.elevator = new Elevator();
-        this.trench = new Trench();
+        this.wheelOfFortune = new WheelOfFortune();
     }
 
     private boolean getHopperPressed() {
@@ -82,9 +82,9 @@ public class Operator {
 
     public void cameraServo() {
         if (getCameraButton()) {
-            trench.cameraRotation(true);
+            wheelOfFortune.cameraRotation(true);
         } else {
-            trench.cameraRotation(false);
+            wheelOfFortune.cameraRotation(false);
         }
     }
 }

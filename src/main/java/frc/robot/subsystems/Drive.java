@@ -1,10 +1,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
-
-import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -12,20 +10,21 @@ import frc.robot.config.ElectricalConstants;
 import frc.robot.config.RobotConfig;
 import frc.robot.lib.KvLib;
 
-//TODO: Change TalonSRXs to FXs
+@SuppressWarnings("unused")
 public class Drive {
 
     // TalonFX Motors
-    public WPI_TalonSRX m_leftDriveSlave, m_rightDriveSlave, m_leftDriveMaster, m_rightDriveMaster;
+    public WPI_TalonFX m_leftDriveSlave, m_rightDriveSlave, m_leftDriveMaster, m_rightDriveMaster;
     private KvLib kvLib;
 
-    SpeedController leftDriveFrController = new WPI_TalonSRX(ElectricalConstants.m_leftDriveMaster);
-    SpeedController leftDriveBackController = new WPI_TalonSRX(ElectricalConstants.m_leftDriveSlave);
-    SpeedController rightDriveFrController = new WPI_TalonSRX(ElectricalConstants.m_rightDriveMaster);
-    SpeedController rightDriveBackController = new WPI_TalonSRX(ElectricalConstants.m_rightDriveSlave);
+    SpeedController leftDriveFrController = new WPI_TalonFX(ElectricalConstants.m_leftDriveMaster);
+    SpeedController leftDriveBackController = new WPI_TalonFX(ElectricalConstants.m_leftDriveSlave);
+    SpeedController rightDriveFrController = new WPI_TalonFX(ElectricalConstants.m_rightDriveMaster);
+    SpeedController rightDriveBackController = new WPI_TalonFX(ElectricalConstants.m_rightDriveSlave);
 
     private SpeedControllerGroup leftDrive = new SpeedControllerGroup(leftDriveFrController, leftDriveBackController);
-    private SpeedControllerGroup rightDrive = new SpeedControllerGroup(rightDriveFrController, rightDriveBackController);
+    private SpeedControllerGroup rightDrive = new SpeedControllerGroup(rightDriveFrController,
+            rightDriveBackController);
 
     private DifferentialDrive drive;
 
@@ -34,15 +33,16 @@ public class Drive {
 
     public Drive() {
 
-        this.m_leftDriveSlave = new WPI_TalonSRX(ElectricalConstants.m_leftDriveSlave);
-        this.m_leftDriveMaster = new WPI_TalonSRX(ElectricalConstants.m_leftDriveMaster);
-        this.m_rightDriveSlave = new WPI_TalonSRX(ElectricalConstants.m_rightDriveSlave);
-        this.m_rightDriveMaster = new WPI_TalonSRX(ElectricalConstants.m_rightDriveMaster);
+        this.m_leftDriveSlave = new WPI_TalonFX(ElectricalConstants.m_leftDriveSlave);
+        this.m_leftDriveMaster = new WPI_TalonFX(ElectricalConstants.m_leftDriveMaster);
+        this.m_rightDriveSlave = new WPI_TalonFX(ElectricalConstants.m_rightDriveSlave);
+        this.m_rightDriveMaster = new WPI_TalonFX(ElectricalConstants.m_rightDriveMaster);
 
         m_leftDriveSlave.follow(m_leftDriveMaster);
         m_rightDriveSlave.follow(m_rightDriveMaster);
 
-        this.s_NavX = new AHRS(Port.kMXP);
+        // Changed port to SPI from serial
+        this.s_NavX = new AHRS(edu.wpi.first.wpilibj.SPI.Port.kMXP);
         this.kvLib = new KvLib();
 
         // Current limiting
@@ -86,8 +86,10 @@ public class Drive {
      * Drive using two TalonSRX and adjustment values for horizontal and distance
      * correction
      */
-    public static void flyWithWires(WPI_TalonSRX starboard, WPI_TalonSRX port, double heading, double throttle) {
-        starboard.set(ControlMode.Velocity, -1 * heading - throttle); // Set the starboard drivetrain motor to the steering power requirement added to the base speed
+    public static void flyWithWires(WPI_TalonFX starboard, WPI_TalonFX port, double heading, double throttle) {
+        starboard.set(ControlMode.Velocity, -1 * heading - throttle); // Set the starboard drivetrain motor to the
+                                                                      // steering power requirement added to the base
+                                                                      // speed
         port.set(ControlMode.Velocity, -1 * heading + throttle); // Does the same but on the other side
     }
 }
