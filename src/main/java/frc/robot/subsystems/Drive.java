@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SpeedController;
+
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.config.ElectricalConstants;
@@ -12,34 +12,25 @@ import frc.robot.lib.KvLib;
 
 @SuppressWarnings("unused")
 public class Drive {
-
-    // TalonFX Motors
-    public WPI_TalonFX m_leftDriveSlave, m_rightDriveSlave, m_leftDriveMaster, m_rightDriveMaster;
+    
     private KvLib kvLib;
 
-    SpeedController leftDriveFrController = new WPI_TalonFX(ElectricalConstants.m_leftDriveMaster);
-    SpeedController leftDriveBackController = new WPI_TalonFX(ElectricalConstants.m_leftDriveSlave);
-    SpeedController rightDriveFrController = new WPI_TalonFX(ElectricalConstants.m_rightDriveMaster);
-    SpeedController rightDriveBackController = new WPI_TalonFX(ElectricalConstants.m_rightDriveSlave);
+    private final WPI_TalonFX m_leftDriveSlave = new WPI_TalonFX(ElectricalConstants.m_leftDriveSlave);
+    private final WPI_TalonFX m_rightDriveSlave = new WPI_TalonFX(ElectricalConstants.m_rightDriveSlave);
+    private final WPI_TalonFX m_leftDriveMaster = new WPI_TalonFX(ElectricalConstants.m_leftDriveMaster);
+    private final WPI_TalonFX m_rightDriveMaster = new WPI_TalonFX(ElectricalConstants.m_rightDriveMaster);
+    
+  private SpeedControllerGroup LeftMotors = new SpeedControllerGroup(m_leftDriveSlave, m_leftDriveMaster);
+  private SpeedControllerGroup RightMotors = new SpeedControllerGroup(m_rightDriveSlave, m_rightDriveMaster);
 
-    private SpeedControllerGroup leftDrive = new SpeedControllerGroup(leftDriveFrController, leftDriveBackController);
-    private SpeedControllerGroup rightDrive = new SpeedControllerGroup(rightDriveFrController,
-            rightDriveBackController);
 
-    private DifferentialDrive drive;
+    private DifferentialDrive drive = new DifferentialDrive(LeftMotors, RightMotors);
 
     // anthony stuff below
     private AHRS s_NavX;
 
     public Drive() {
-
-        this.m_leftDriveSlave = new WPI_TalonFX(ElectricalConstants.m_leftDriveSlave);
-        this.m_leftDriveMaster = new WPI_TalonFX(ElectricalConstants.m_leftDriveMaster);
-        this.m_rightDriveSlave = new WPI_TalonFX(ElectricalConstants.m_rightDriveSlave);
-        this.m_rightDriveMaster = new WPI_TalonFX(ElectricalConstants.m_rightDriveMaster);
-
-        m_leftDriveSlave.follow(m_leftDriveMaster);
-        m_rightDriveSlave.follow(m_rightDriveMaster);
+    
 
         // Changed port to SPI from serial
         this.s_NavX = new AHRS(edu.wpi.first.wpilibj.SPI.Port.kMXP);
@@ -54,8 +45,6 @@ public class Drive {
          * kvLib.setDriveTrainCurrentLimiting(m_rightDriveBack);
          * kvLib.setDriveTrainCurrentLimiting(m_rightDriveFront);
          */
-        // Differential drive
-        drive = new DifferentialDrive(leftDrive, rightDrive);
     }
 
     // @param resets the drive encoders
@@ -67,11 +56,7 @@ public class Drive {
     }
 
     public void move(double linearSpeed, double curveSpeed, boolean quickT) {
-        if (s_NavX.getVelocityX() > 1.72 || s_NavX.getVelocityY() > 1.72) {
-            drive.curvatureDrive(linearSpeed, curveSpeed, quickT);
-        } else {
-            drive.curvatureDrive(linearSpeed * RobotConfig.transmission, curveSpeed * RobotConfig.transmission, quickT);
-        }
+        drive.curvatureDrive(linearSpeed, curveSpeed, quickT);
     }
 
     public void calibrate() {

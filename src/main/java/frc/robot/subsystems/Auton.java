@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import frc.robot.config.ElectricalConstants;
 
-//TODO: Write auton code
 // Step 0.5 Shoot 3 Cells
 // Step 1: turn 45 degrees
 // Step 2: go straight for X encoder rotations
@@ -39,7 +38,7 @@ public class Auton {
         m_leftDriveSlave.follow(m_leftDriveMaster);
         m_rightDriveSlave.follow(m_rightDriveMaster);
         // runtime timer
-        timer = new Timer();
+        this.timer = new Timer();
 
     }
 

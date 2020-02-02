@@ -12,7 +12,7 @@ public class LEDs {
 
     public LEDs() {
 
-        m_led = new AddressableLED(ElectricalConstants.LED_Port);
+        m_led = new AddressableLED(ElectricalConstants.LED_leftDrive);
         // Reuse buffer
         // Default to a length of 60, start empty output
         // Length is expensive to set, so only set it once, then just update data

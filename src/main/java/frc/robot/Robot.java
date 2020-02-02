@@ -7,8 +7,12 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Limelight;
@@ -35,6 +39,8 @@ public class Robot extends TimedRobot {
   private Pneumatics pneumatics;
   private ShuffleBoard shuffleBoard;
   private Limelight limelight;
+
+
 
   // Drive controller
   private XboxController driver;
@@ -72,6 +78,7 @@ public class Robot extends TimedRobot {
     drive.calibrate();
 
     /* Initiate Controllers */
+    
     driver = new XboxController(ElectricalConstants.driverPort);
 
     /* Pneumatic intiation */
@@ -88,7 +95,9 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     LiveWindow.disableAllTelemetry();
-    limelight.limelightTargetControl(operator.getLimelightTrenchAlignButton(), operator.getLimelightLineAlignButton());
+    leds.putData();
+    leds.rainbow();
+    //limelight.limelightTargetControl(operator.getLimelightTrenchAlignButton(), operator.getLimelightLineAlignButton());
   }
 
   @Override
@@ -96,8 +105,7 @@ public class Robot extends TimedRobot {
 
     // LEDs
     //TODO: Optimize this
-    //leds.putData();
-    //leds.rainbow();
+
 
     /* ShuffleBoard */
     shuffleBoard.shuffleBoardMatchTime();
@@ -108,11 +116,10 @@ public class Robot extends TimedRobot {
     operator.elevator();
     operator.cameraServo();
 
-    /* Drive commands */
-    // if (limelight.driveMode == 0) {
-      double linearSpeed = kvLib.driveDeadband(driver.getRawAxis(1));
-      double curveSpeed = kvLib.driveDeadband(-driver.getRawAxis(4));
-      drive.move(linearSpeed, curveSpeed, driver.getRawButton(6));
-    //}
+    
+    double linearSpeed = kvLib.driveDeadband(driver.getRawAxis(1));
+    double curveSpeed = kvLib.driveDeadband(-driver.getRawAxis(4));
+    drive.move(linearSpeed, curveSpeed, driver.getRawButton(6));
+
   }
 }
