@@ -4,14 +4,15 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import frc.robot.config.ElectricalConstants;
 import frc.robot.config.RobotConfig;
-import frc.robot.subsystems.Pneumatics;
+// import frc.robot.subsystems.Pneumatics;
 
 public class Elevator {
 
     private WPI_TalonSRX m_left, m_right;
-    private Pneumatics pneumatics;
+    //private Pneumatics pneumatics;
 
     public Elevator() {
+        //pneumatics = new Pneumatics();
         this.m_left = new WPI_TalonSRX(ElectricalConstants.elevatorleftID);
         this.m_right = new WPI_TalonSRX(ElectricalConstants.elevatorRightID);
     }
@@ -25,10 +26,9 @@ public class Elevator {
             m_right.set(0);
         }
     }
-    public void pistonRelease(boolean piston) {
-        pneumatics = new Pneumatics();
-        if(piston) {
-            pneumatics.elevatorActuater(true);
-        }
-    }
+    // public void pistonRelease(boolean piston) {
+    //     if(piston) {
+    //         pneumatics.elevatorActuater(true);
+    //     }
+    // }
 }

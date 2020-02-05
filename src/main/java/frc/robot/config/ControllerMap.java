@@ -18,13 +18,13 @@ public class ControllerMap {
 
     public static final int ShooterButton = 2; 
     
-    public static final int PistonReleaseButton = 3;
+    public static final int HopperSpinReverse = 3;
 
     public static final int ElevatorButton = 4;
 
     public static final int LimelightTrenchAlignButton = 5;
 
     public static final int LimelightLineAlignButton = 6;
-  
-    public static final int CameraButton = 7;
+
+
 }

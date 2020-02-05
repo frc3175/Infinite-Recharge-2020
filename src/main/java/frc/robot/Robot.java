@@ -7,19 +7,18 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import frc.robot.subsystems.Auton;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.Operator;
-import frc.robot.util.LEDs;
 import frc.robot.subsystems.Pneumatics;
 import frc.robot.util.ShuffleBoard;
+import frc.robot.commands.MoveElevator;
+import frc.robot.commands.ShootBall;
+import frc.robot.commands.SpinHopperForward;
+import frc.robot.commands.SpinHopperReverse;
 import frc.robot.config.ElectricalConstants;
 import frc.robot.lib.KvLib;
 
@@ -33,12 +32,16 @@ public class Robot extends TimedRobot {
 
   // subsystems
   private Drive drive;
-  private KvLib kvLib;
-  private Operator operator;
-  private LEDs leds;
   private Pneumatics pneumatics;
   private ShuffleBoard shuffleBoard;
   private Limelight limelight;
+  //private Auton auton;
+
+  //commands
+  private ShootBall shootball = new ShootBall();
+  private SpinHopperForward spinHopperForward = new SpinHopperForward();
+  private SpinHopperReverse spinHopperReverse = new SpinHopperReverse();
+  private MoveElevator moveElevator = new MoveElevator();
 
 
 
@@ -46,32 +49,18 @@ public class Robot extends TimedRobot {
   private XboxController driver;
 
   @Override
-  public void autonomousInit() {
-
-  }
-
-  @Override
-  public void autonomousPeriodic() {
-    /*
-     * if (autonMode.equals("cross")) { if (runTime.get() < 2) {
-     * driveTrain.arcadeDrive(0.75, 0); } } else if (autonMode.equals("switch")) {
-     * if ((field.charAt(0) == 'L' && LOCATION == 0) || (field.charAt(0) == 'R' &&
-     * LOCATION == 1)) { // 0 is left, 1 is right switchDump(); } else { if
-     * (runTime.get() < 1.5) { driveTrain.arcadeDrive(0.75, 0); } } }
-     */
-  }
-
-  @Override
   public void robotInit() {
     /* Subsystems */
     this.drive = new Drive();
-    this.kvLib = new KvLib();
-    this.operator = new Operator();
-    //TODO: Turn on Pneumatics
-    //this.pneumatics = new Pneumatics();
-    this.leds = new LEDs();
-    this.limelight = new Limelight();
+    this.pneumatics = new Pneumatics();
+
+    //TODO:Enable Limelight
+    //this.limelight = new Limelight();
     this.shuffleBoard = new ShuffleBoard();
+
+    //TODO:Enable Auton
+    //this.auton = new Auton();
+    
 
     // resets
     drive.reset();
@@ -82,7 +71,11 @@ public class Robot extends TimedRobot {
     driver = new XboxController(ElectricalConstants.driverPort);
 
     /* Pneumatic intiation */
-    //pneumatics.initializeCompressor(true);
+    pneumatics.pneumaticsInitialization();
+    pneumatics.initializeCompressor(true);
+
+    //limelight initialization
+    //limelight.initializeLimelight();
 
   }
 
@@ -93,32 +86,37 @@ public class Robot extends TimedRobot {
   }
 
   @Override
+  public void autonomousInit() {
+
+  }
+
+  @Override
+  public void autonomousPeriodic() {
+    //auton.execute();
+  }
+
+  @Override
   public void robotPeriodic() {
     LiveWindow.disableAllTelemetry();
-    leds.putData();
-    leds.rainbow();
+    //limelight.periodicNumbers();
+
     //limelight.limelightTargetControl(operator.getLimelightTrenchAlignButton(), operator.getLimelightLineAlignButton());
   }
 
   @Override
   public void teleopPeriodic() {
 
-    // LEDs
-    //TODO: Optimize this
-
-
     /* ShuffleBoard */
     shuffleBoard.shuffleBoardMatchTime();
 
     /* Operator Commands */
-    operator.hopperSpin();
-    operator.shooter();
-    operator.elevator();
-    operator.cameraServo();
-
+    spinHopperForward.execute();
+    spinHopperReverse.execute();
+    shootball.execute();
+    moveElevator.execute();
     
-    double linearSpeed = kvLib.driveDeadband(driver.getRawAxis(1));
-    double curveSpeed = kvLib.driveDeadband(-driver.getRawAxis(4));
+    double linearSpeed = KvLib.driveDeadband(driver.getRawAxis(1));
+    double curveSpeed = KvLib.driveDeadband(-driver.getRawAxis(4));
     drive.move(linearSpeed, curveSpeed, driver.getRawButton(6));
 
   }

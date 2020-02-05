@@ -12,14 +12,14 @@ public class Pneumatics {
     private Compressor compressor;
 
 
-    public Pneumatics() {
-        compressor = new Compressor(0);
-
-        //Pistons
-        this.e_piston = new DoubleSolenoid(ElectricalConstants.e_pistonSolenoid_F, ElectricalConstants.e_pistonSolenoid_R);
-        this.t_piston = new DoubleSolenoid(ElectricalConstants.t_pistonSolenoid_F, ElectricalConstants.t_pistonSolenoid_R);
-    }
-
+        public void pneumaticsInitialization() {
+            compressor = new Compressor(0);
+            
+            //Pistons
+            this.e_piston = new DoubleSolenoid(ElectricalConstants.e_pistonSolenoid_F, ElectricalConstants.e_pistonSolenoid_R);
+            this.t_piston = new DoubleSolenoid(ElectricalConstants.t_pistonSolenoid_F, ElectricalConstants.t_pistonSolenoid_R);
+        }
+        
     @SuppressWarnings("all")
     public void elevatorActuater(boolean pressed) {
 

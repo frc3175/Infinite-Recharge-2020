@@ -12,20 +12,20 @@ import frc.robot.util.Mathematics;
 public class Limelight {
 
     private LimelightAssist limelight;
-    private Drive drive;
 
     // Drivemode between Limelight auto drive and manual
     public int driveMode = 0;
 
-    public Limelight() {
-        SmartDashboard.putNumber("LimelightX", x); // Horizontal error
-        SmartDashboard.putNumber("LimelightY", y); // Vertical error
-        SmartDashboard.putNumber("LimelightArea", area); // Area of limelight target
+    public void initializeLimelight(){
 
         // Limelight assist provided by team 694
         limelight = new LimelightAssist();
-        drive = new Drive();
+    }
 
+    public void periodicNumbers(){
+        SmartDashboard.putNumber("LimelightX", x); // Horizontal error
+        SmartDashboard.putNumber("LimelightY", y); // Vertical error
+        SmartDashboard.putNumber("LimelightArea", area); // Area of limelight target
     }
 
     // Establish link to limelight

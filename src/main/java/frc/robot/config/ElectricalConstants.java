@@ -34,18 +34,6 @@ public class ElectricalConstants {
     // ElevatorIDs
     public static final int elevatorleftID = 17;
     public static final int elevatorRightID = 18; 
-
-    //LED PWM port
-    public static final int LED_leftDrive = 0;
-    public static final int LED_rightDrive = 1;
-
-    //Testing Motor Constants
-    public static final int TestingMotor1 = 19;
-    public static final int TestingMotor2 = 20;
-    public static final int TestingMotor3 = 21;
-
-    //servo
-    public static final int ServoID = 1;
     
 
 }

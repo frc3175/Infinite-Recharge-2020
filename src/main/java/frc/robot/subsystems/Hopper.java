@@ -8,11 +8,7 @@ import frc.robot.config.RobotConfig;;
 
 public class Hopper {
 
-    private TalonSRX m_hopper; 
-
-    public Hopper() {
-        this.m_hopper = new TalonSRX(ElectricalConstants.m_hopperID); 
-    }
+    private TalonSRX m_hopper = new TalonSRX(ElectricalConstants.m_hopperID); 
 
     public void hopperSpin(boolean pressed) {
 
@@ -22,7 +18,14 @@ public class Hopper {
             m_hopper.set(ControlMode.PercentOutput, 0);
 
         }
-
+    }
+    
+    public void hopperSpinReverse(boolean pressed) {
+        if(pressed) {
+            m_hopper.set(ControlMode.PercentOutput, RobotConfig.hopperSpeedReverse);
+        } else {
+            m_hopper.set(ControlMode.PercentOutput, 0);
+        }
     }
 }
 

@@ -7,66 +7,23 @@ import frc.robot.config.ElectricalConstants;
 public class Operator {
 
     @SuppressWarnings("all")
-    private XboxController operator;
-    private Hopper hopper;
-    private Shooter shooter;
-    private Elevator elevator;
-    private WheelOfFortune wheelOfFortune;
 
-    public Operator() {
-        this.operator = new XboxController(ElectricalConstants.operatorPort);
+    //Xbox controller
+    private XboxController operator = new XboxController(ElectricalConstants.operatorPort);
 
-        // subsystems
-        this.hopper = new Hopper();
-        this.shooter = new Shooter();
-        this.elevator = new Elevator();
-        this.wheelOfFortune = new WheelOfFortune();
-    }
-
-    private boolean getHopperPressed() {
+    public boolean getHopperPressed() {
         return operator.getRawButton(ControllerMap.HopperButton);
     }
 
-    public void hopperSpin() {
-        if (getHopperPressed()) {
-            hopper.hopperSpin(true);
-        } else {
-            hopper.hopperSpin(false);
-        }
+    public boolean getHopperPressedReversed(){
+        return operator.getRawButton(ControllerMap.HopperSpinReverse);
     }
-
-    private boolean getShooterButton() {
+    public boolean getShooterButton() {
         return operator.getRawButton(ControllerMap.ShooterButton);
     }
 
-    public void shooter() {
-        if (getShooterButton()) {
-            shooter.shooterBoi(true);
-        } else {
-            shooter.shooterBoi(false);
-        }
-    }
-
-    private boolean getElevatorButton() {
+    public boolean getElevatorButton() {
         return operator.getRawButton(ControllerMap.ElevatorButton);
-    }
-
-    public void elevator() {
-        if (getElevatorButton()) {
-            elevator.move(true);
-        } else {
-            elevator.move(false);
-        }
-    }
-
-    private boolean getPistonButton() {
-        return operator.getRawButton(ControllerMap.PistonReleaseButton);
-    }
-
-    public void pistonRelease() {
-        if (getPistonButton()) {
-            elevator.pistonRelease(true);
-        }
     }
     
     public boolean getLimelightTrenchAlignButton() {
@@ -76,15 +33,5 @@ public class Operator {
     public boolean getLimelightLineAlignButton() {
         return operator.getRawButton(ControllerMap.LimelightLineAlignButton);
     }
-    private boolean getCameraButton() {
-        return operator.getRawButton(ControllerMap.CameraButton);
-    }
 
-    public void cameraServo() {
-        if (getCameraButton()) {
-            wheelOfFortune.cameraRotation(true);
-        } else {
-            wheelOfFortune.cameraRotation(false);
-        }
-    }
 }

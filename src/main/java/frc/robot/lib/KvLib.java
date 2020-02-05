@@ -19,7 +19,7 @@ public class KvLib {
         return val;
     }
 
-    public double driveDeadband(double val) {
+    public static double driveDeadband(double val) {
         if (Math.abs(val) < RobotConfig.driveDeadband) {
             return 0;
         }

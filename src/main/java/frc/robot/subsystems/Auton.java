@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.SerialPort.Port;
 import frc.robot.config.ElectricalConstants;
 
 // Step 0.5 Shoot 3 Cells
@@ -28,7 +27,7 @@ public class Auton {
         // subsystems
         this.drive = new Drive();
         this.shooter = new Shooter();
-        this.s_NavX = new AHRS(Port.kMXP);
+        this.s_NavX = new AHRS(edu.wpi.first.wpilibj.SPI.Port.kMXP);
 
         this.m_leftDriveSlave = new WPI_TalonFX(ElectricalConstants.m_leftDriveSlave);
         this.m_leftDriveMaster = new WPI_TalonFX(ElectricalConstants.m_leftDriveMaster);
@@ -162,5 +161,15 @@ public class Auton {
             }
 
         }
+    }
+    public void execute(){
+        shootBalls();
+        turn45();
+        goStraight();
+        turn45Opposite();
+        goStraight2();
+        reverseBack();
+        turn180();
+        shootBalls2();
     }
 }
