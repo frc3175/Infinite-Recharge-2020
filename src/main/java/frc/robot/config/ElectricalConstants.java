@@ -34,6 +34,9 @@ public class ElectricalConstants {
     // ElevatorIDs
     public static final int elevatorleftID = 17;
     public static final int elevatorRightID = 18; 
+
+    //intake
+    public static final int intake_ID = 19;
     
 
 }

@@ -16,7 +16,7 @@ public class RobotConfig {
     public static final int trenchDirection = 0;
 
     // Shooter speed
-    public static final double shooterSpeed_TopMotor = 0.79;
+    public static final double shooterSpeed_TopMotor = 0.4;
     public static final double shooterSpeed_BottomMotor = 1;
 
     // Hopper
@@ -26,8 +26,10 @@ public class RobotConfig {
     //Elevator Speed
     public static final double elevatorSpeed = 0.6;
 
-    //Testing Speeds
-    public static final double testingSpeed = 0.8;
+    //intake Speeds
+    public static final double intakeSpeed = 0.8;
+
+
 
 
 

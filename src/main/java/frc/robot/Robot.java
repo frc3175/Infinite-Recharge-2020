@@ -15,10 +15,11 @@ import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Pneumatics;
 import frc.robot.util.ShuffleBoard;
+import frc.robot.commands.LimelightTargetControl;
 import frc.robot.commands.MoveElevator;
+import frc.robot.commands.MoveIntake;
 import frc.robot.commands.ShootBall;
-import frc.robot.commands.SpinHopperForward;
-import frc.robot.commands.SpinHopperReverse;
+import frc.robot.commands.SpinHopper;
 import frc.robot.config.ElectricalConstants;
 import frc.robot.lib.KvLib;
 
@@ -35,13 +36,14 @@ public class Robot extends TimedRobot {
   private Pneumatics pneumatics;
   private ShuffleBoard shuffleBoard;
   private Limelight limelight;
-  //private Auton auton;
+  private Auton auton;
 
   //commands
   private ShootBall shootball = new ShootBall();
-  private SpinHopperForward spinHopperForward = new SpinHopperForward();
-  private SpinHopperReverse spinHopperReverse = new SpinHopperReverse();
+  private SpinHopper spinHopper = new SpinHopper();
   private MoveElevator moveElevator = new MoveElevator();
+  private LimelightTargetControl limelightTargetControl = new LimelightTargetControl();
+  private MoveIntake moveIntake = new MoveIntake();
 
 
 
@@ -55,11 +57,11 @@ public class Robot extends TimedRobot {
     this.pneumatics = new Pneumatics();
 
     //TODO:Enable Limelight
-    //this.limelight = new Limelight();
+    this.limelight = new Limelight();
     this.shuffleBoard = new ShuffleBoard();
 
     //TODO:Enable Auton
-    //this.auton = new Auton();
+    this.auton = new Auton();
     
 
     // resets
@@ -67,7 +69,6 @@ public class Robot extends TimedRobot {
     drive.calibrate();
 
     /* Initiate Controllers */
-    
     driver = new XboxController(ElectricalConstants.driverPort);
 
     /* Pneumatic intiation */
@@ -75,7 +76,7 @@ public class Robot extends TimedRobot {
     pneumatics.initializeCompressor(true);
 
     //limelight initialization
-    //limelight.initializeLimelight();
+    limelight.initializeLimelight();
 
   }
 
@@ -87,20 +88,20 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-
+    drive.reset();
+    drive.calibrate();
   }
 
   @Override
   public void autonomousPeriodic() {
-    //auton.execute();
+    auton.execute();
   }
 
   @Override
   public void robotPeriodic() {
     LiveWindow.disableAllTelemetry();
-    //limelight.periodicNumbers();
+    limelight.periodicNumbers();
 
-    //limelight.limelightTargetControl(operator.getLimelightTrenchAlignButton(), operator.getLimelightLineAlignButton());
   }
 
   @Override
@@ -110,10 +111,12 @@ public class Robot extends TimedRobot {
     shuffleBoard.shuffleBoardMatchTime();
 
     /* Operator Commands */
-    spinHopperForward.execute();
-    spinHopperReverse.execute();
+    spinHopper.execute();
     shootball.execute();
     moveElevator.execute();
+    limelightTargetControl.execute();
+    moveIntake.execute();
+    
     
     double linearSpeed = KvLib.driveDeadband(driver.getRawAxis(1));
     double curveSpeed = KvLib.driveDeadband(-driver.getRawAxis(4));

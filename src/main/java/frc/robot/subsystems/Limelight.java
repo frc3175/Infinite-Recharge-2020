@@ -54,7 +54,7 @@ public class Limelight {
                 double distanceDifference = Mathematics.calcPulses(LimelightConstants.TrenchDistance) - Mathematics.calcPulses(currentDistance); // Difference in distance (error)
                 double distanceAdjust = distanceDifference / LimelightConstants.navigationTime; // Calculates a distance adjustment based on error
                 double steeringAdjust = LimelightConstants.angularScaleUp * x; // Creates a side-to-side adjustment based on error
-                //Drive.flyWithWires(drive.m_rightDriveMaster, drive.m_leftDriveMaster, steeringAdjust, distanceAdjust * LimelightConstants.distanceScaleUp); // Drive using adjustment values
+                Drive.flyWithWires(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, steeringAdjust, distanceAdjust * LimelightConstants.distanceScaleUp); // Drive using adjustment values
 
             } else if (pressedLine) {
                 driveMode = 1;
@@ -67,7 +67,7 @@ public class Limelight {
                     double distanceDifference = Mathematics.calcPulses(LimelightConstants.LineDistance) - Mathematics.calcPulses(currentDistance); // Difference in distance (error)
                     double distanceAdjust = distanceDifference / LimelightConstants.navigationTime; // Calculates a distance adjustment based on error
                     double steeringAdjust = LimelightConstants.angularScaleUp * x; // Creates a side-to-side adjustment based on error
-                    //drive.flyWithWires(drive.m_rightDriveMaster, drive.m_leftDriveMaster, steeringAdjust, distanceAdjust * LimelightConstants.distanceScaleUp); // Drive using adjustment values
+                    Drive.flyWithWires(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, steeringAdjust, distanceAdjust * LimelightConstants.distanceScaleUp); // Drive using adjustment values
                 }
 
             } else {

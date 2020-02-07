@@ -3,23 +3,17 @@ package frc.robot.commands;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Operator;
 
-public class SpinHopperReverse {
+public class SpinHopper {
 
     private Operator operator;
     private Hopper hopper;
 
-    public SpinHopperReverse() {
+    public SpinHopper() {
         operator = new Operator();
         hopper = new Hopper();
     }
 
     public void execute() {
-        if (operator.getHopperPressedReversed()) {
-            hopper.hopperSpinReverse(true);
-        } else {
-            hopper.hopperSpinReverse(false);
-        }
+        hopper.hopperSpin(operator.getHopperPressed(), operator.getHopperPressedReversed());
     }
-
-
 }

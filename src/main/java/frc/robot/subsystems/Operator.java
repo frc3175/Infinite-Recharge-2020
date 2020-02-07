@@ -34,4 +34,8 @@ public class Operator {
         return operator.getRawButton(ControllerMap.LimelightLineAlignButton);
     }
 
+    public boolean getIntakeButton(){
+        return operator.getRawButton(ControllerMap.intakeButton);
+    }
+
 }

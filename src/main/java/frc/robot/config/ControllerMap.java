@@ -20,11 +20,14 @@ public class ControllerMap {
     
     public static final int HopperSpinReverse = 3;
 
-    public static final int ElevatorButton = 4;
+    public static final int intakeButton = 4;
+    //TODO: Change
+    public static final int ElevatorButton = 10;
 
     public static final int LimelightTrenchAlignButton = 5;
 
     public static final int LimelightLineAlignButton = 6;
+
 
 
 }

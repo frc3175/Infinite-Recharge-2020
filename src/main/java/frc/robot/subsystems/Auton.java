@@ -1,10 +1,8 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Timer;
-import frc.robot.config.ElectricalConstants;
 
 // Step 0.5 Shoot 3 Cells
 // Step 1: turn 45 degrees
@@ -14,28 +12,22 @@ import frc.robot.config.ElectricalConstants;
 // Step 5: reverse all steps and shoot 5 cells
 public class Auton {
 
-    private WPI_TalonFX m_leftDriveSlave, m_rightDriveSlave, m_leftDriveMaster, m_rightDriveMaster;
+   
 
-    private Drive drive;
-    private AHRS s_NavX;
     private Shooter shooter;
+
+    private AHRS s_NavX;
     private Timer timer;
     private int autonState = 0;
 
     public Auton() {
 
+        Drive.m_leftDriveSlave.follow(Drive.m_leftDriveMaster);
+        Drive.m_rightDriveSlave.follow(Drive.m_rightDriveMaster);
+
         // subsystems
-        this.drive = new Drive();
         this.shooter = new Shooter();
-        this.s_NavX = new AHRS(edu.wpi.first.wpilibj.SPI.Port.kMXP);
 
-        this.m_leftDriveSlave = new WPI_TalonFX(ElectricalConstants.m_leftDriveSlave);
-        this.m_leftDriveMaster = new WPI_TalonFX(ElectricalConstants.m_leftDriveMaster);
-        this.m_rightDriveSlave = new WPI_TalonFX(ElectricalConstants.m_rightDriveSlave);
-        this.m_rightDriveMaster = new WPI_TalonFX(ElectricalConstants.m_rightDriveMaster);
-
-        m_leftDriveSlave.follow(m_leftDriveMaster);
-        m_rightDriveSlave.follow(m_rightDriveMaster);
         // runtime timer
         this.timer = new Timer();
 
@@ -61,11 +53,11 @@ public class Auton {
         if (autonState == 1) {
             // Do code
             if (s_NavX.getAngle() < 45) {
-                drive.tankDrive(0.3, 0);
+                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0.3, 0);
             } else {
-                drive.tankDrive(0, 0);
-                m_rightDriveSlave.setSelectedSensorPosition(0);
-                m_leftDriveSlave.setSelectedSensorPosition(0);
+                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0.3, 0);
+                Drive.m_leftDriveMaster.setSelectedSensorPosition(0);
+                Drive.m_rightDriveMaster.setSelectedSensorPosition(0);
                 autonState++;
             }
         }
@@ -75,11 +67,11 @@ public class Auton {
 
         if (autonState == 2) {
             // Do code
-            if (m_leftDriveSlave.getSelectedSensorPosition() < 36000
-                    && m_rightDriveSlave.getSelectedSensorPosition() < 36000) {
-                drive.tankDrive(1, 1);
+            if (Drive.m_leftDriveMaster.getSelectedSensorPosition() < 36000
+                    && Drive.m_rightDriveMaster.getSelectedSensorPosition() < 36000) {
+                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 1, 1);
             } else {
-                drive.tankDrive(0, 0);
+                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0.0, 0);
                 autonState++;
             }
         }
@@ -90,9 +82,9 @@ public class Auton {
         if (autonState == 3) {
             // Do code
             if (s_NavX.getAngle() > 0) {
-                drive.tankDrive(0, 0.3);
+                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0, 0.3);
             } else {
-                drive.tankDrive(0, 0);
+                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0, 0);
                 autonState++;
             }
         }
@@ -102,13 +94,13 @@ public class Auton {
 
         if (autonState == 4) {
             // Do code
-            if (m_leftDriveSlave.getSelectedSensorPosition() < 36000
-                    && m_rightDriveSlave.getSelectedSensorPosition() < 36000) {
-                drive.tankDrive(1, 1);
+            if (Drive.m_leftDriveMaster.getSelectedSensorPosition() < 36000
+                    && Drive.m_rightDriveMaster.getSelectedSensorPosition() < 36000) {
+                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 1, 1);
             } else {
-                drive.tankDrive(0, 0);
-                m_rightDriveSlave.setSelectedSensorPosition(0);
-                m_leftDriveSlave.setSelectedSensorPosition(0);
+                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0, 0);
+                Drive.m_leftDriveMaster.setSelectedSensorPosition(0);
+                Drive.m_rightDriveMaster.setSelectedSensorPosition(0);
                 autonState++;
             }
 
@@ -120,11 +112,11 @@ public class Auton {
 
         if (autonState == 5) {
             // Do code
-            if (m_rightDriveSlave.getSelectedSensorPosition() > -36000
-                    && m_leftDriveSlave.getSelectedSensorPosition() > -36000) {
-                drive.tankDrive(-1, -1);
+            if (Drive.m_rightDriveMaster.getSelectedSensorPosition() > -36000
+                    && Drive.m_leftDriveMaster.getSelectedSensorPosition() > -36000) {
+                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, -1, -1);
             } else {
-                drive.tankDrive(0, 0);
+                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0, 0);
                 autonState++;
             }
         }
@@ -136,9 +128,9 @@ public class Auton {
         if (autonState == 6) {
             // Do code
             if (s_NavX.getAngle() < 180) {
-                drive.tankDrive(0.8, 0);
+                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0.8, 0);
             } else {
-                drive.tankDrive(0, 0);
+                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0, 0);
                 autonState++;
             }
 

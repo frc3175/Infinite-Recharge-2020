@@ -12,26 +12,18 @@ import frc.robot.config.RobotConfig;
 @SuppressWarnings("unused")
 public class Drive {
 
-
-    private final WPI_TalonFX m_leftDriveSlave = new WPI_TalonFX(ElectricalConstants.m_leftDriveSlave);
-    private final WPI_TalonFX m_rightDriveSlave = new WPI_TalonFX(ElectricalConstants.m_rightDriveSlave);
-    private final WPI_TalonFX m_leftDriveMaster = new WPI_TalonFX(ElectricalConstants.m_leftDriveMaster);
-    private final WPI_TalonFX m_rightDriveMaster = new WPI_TalonFX(ElectricalConstants.m_rightDriveMaster);
+    public final static WPI_TalonFX m_leftDriveSlave = new WPI_TalonFX(ElectricalConstants.m_leftDriveSlave);
+    public final static WPI_TalonFX m_rightDriveSlave = new WPI_TalonFX(ElectricalConstants.m_rightDriveSlave);
+    public final static WPI_TalonFX m_leftDriveMaster = new WPI_TalonFX(ElectricalConstants.m_leftDriveMaster);
+    public final static WPI_TalonFX m_rightDriveMaster = new WPI_TalonFX(ElectricalConstants.m_rightDriveMaster);
 
     private SpeedControllerGroup LeftMotors = new SpeedControllerGroup(m_leftDriveSlave, m_leftDriveMaster);
     private SpeedControllerGroup RightMotors = new SpeedControllerGroup(m_rightDriveSlave, m_rightDriveMaster);
 
-    private DifferentialDrive drive = new DifferentialDrive(LeftMotors, RightMotors);
+    public DifferentialDrive drive = new DifferentialDrive(LeftMotors, RightMotors);
 
     // anthony stuff below
-    private AHRS s_NavX;
-
-    public Drive() {
-
-        // Changed port to SPI from serial
-        this.s_NavX = new AHRS(edu.wpi.first.wpilibj.SPI.Port.kMXP);
-
-    }
+    private AHRS s_NavX = new AHRS(edu.wpi.first.wpilibj.SPI.Port.kMXP);;
 
     // @param resets the drive encoders
     public void reset() {
@@ -49,8 +41,9 @@ public class Drive {
         this.s_NavX.reset();
     }
 
-    public void tankDrive(double leftSpeed, double rightSpeed) {
-        drive.tankDrive(leftSpeed, rightSpeed);
+    public static void autonTank(WPI_TalonFX starboard, WPI_TalonFX port, double leftspeed, double rightspeed) {
+        starboard.set(ControlMode.PercentOutput, leftspeed);
+        port.set(ControlMode.PercentOutput, rightspeed);
     }
 
     /**

@@ -10,20 +10,13 @@ public class Hopper {
 
     private TalonSRX m_hopper = new TalonSRX(ElectricalConstants.m_hopperID); 
 
-    public void hopperSpin(boolean pressed) {
+    public void hopperSpin(boolean Reverse, boolean Forward) {
 
-        if(pressed) {
+        if(Reverse) {
+            m_hopper.set(ControlMode.PercentOutput, RobotConfig.hopperSpeedReverse);
+        } else if(Forward) {
             m_hopper.set(ControlMode.PercentOutput, RobotConfig.hopperSpeed);
         } else{
-            m_hopper.set(ControlMode.PercentOutput, 0);
-
-        }
-    }
-    
-    public void hopperSpinReverse(boolean pressed) {
-        if(pressed) {
-            m_hopper.set(ControlMode.PercentOutput, RobotConfig.hopperSpeedReverse);
-        } else {
             m_hopper.set(ControlMode.PercentOutput, 0);
         }
     }

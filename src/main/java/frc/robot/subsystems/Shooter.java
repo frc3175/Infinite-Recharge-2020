@@ -14,6 +14,7 @@ public class Shooter {
         this.m_shooterTop = new TalonSRX(ElectricalConstants.topMotorID);
         this.m_shooterBottom = new TalonSRX(ElectricalConstants.bottomMotorID);
     }
+    //javier
     public void shooterBoi(boolean pressed) {
 
 
