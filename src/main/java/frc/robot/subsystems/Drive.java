@@ -6,7 +6,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import frc.robot.config.ElectricalConstants;
+import frc.robot.ElectricalConstants;
 import frc.robot.config.RobotConfig;
 
 @SuppressWarnings("unused")
@@ -25,7 +25,9 @@ public class Drive {
     // anthony stuff below
     private AHRS s_NavX = new AHRS(edu.wpi.first.wpilibj.SPI.Port.kMXP);;
 
-    // @param resets the drive encoders
+    /**
+     * resets all drive encoders
+     */
     public void reset() {
         m_leftDriveSlave.setSelectedSensorPosition(0);
         m_leftDriveMaster.setSelectedSensorPosition(0);
@@ -33,14 +35,30 @@ public class Drive {
         m_rightDriveMaster.setSelectedSensorPosition(0);
     }
 
+    /**
+     * 
+     * @param linearSpeed Foward and reverse linear direction
+     * @param curveSpeed Curved speed
+     * @param quickT Quick turn
+     */
     public void move(double linearSpeed, double curveSpeed, boolean quickT) {
         drive.curvatureDrive(linearSpeed, curveSpeed, quickT);
     }
 
+    /**
+     * Calibrates NavX
+     */
     public void calibrate() {
         this.s_NavX.reset();
     }
 
+    /**
+     * 
+     * @param starboard right side talonFX
+     * @param port left Side TalonFX
+     * @param leftspeed leftspeed
+     * @param rightspeed rightspeed
+     */
     public static void autonTank(WPI_TalonFX starboard, WPI_TalonFX port, double leftspeed, double rightspeed) {
         starboard.set(ControlMode.PercentOutput, leftspeed);
         port.set(ControlMode.PercentOutput, rightspeed);

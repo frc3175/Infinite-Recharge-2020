@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import frc.robot.config.ElectricalConstants;
+import frc.robot.ElectricalConstants;
 import frc.robot.config.RobotConfig;
 // import frc.robot.subsystems.Pneumatics;
 
@@ -19,6 +19,7 @@ public class Intake {
     public void move(boolean move) {
         if (move) {
             intake.set(RobotConfig.intakeSpeed);
+
         } else {
             intake.set(0);
         }

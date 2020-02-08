@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import frc.robot.config.ElectricalConstants;
+import frc.robot.ElectricalConstants;
 import frc.robot.config.RobotConfig;
 
 public class Pneumatics {

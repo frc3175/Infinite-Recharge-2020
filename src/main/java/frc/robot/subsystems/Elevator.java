@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import frc.robot.config.ElectricalConstants;
+import frc.robot.ElectricalConstants;
 import frc.robot.config.RobotConfig;
 // import frc.robot.subsystems.Pneumatics;
 

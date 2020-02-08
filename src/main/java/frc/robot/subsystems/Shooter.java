@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import frc.robot.config.ElectricalConstants;
+import frc.robot.ElectricalConstants;
 import frc.robot.config.RobotConfig;
 
 public class Shooter {
@@ -15,7 +15,7 @@ public class Shooter {
         this.m_shooterBottom = new TalonSRX(ElectricalConstants.bottomMotorID);
     }
     //javier
-    public void shooterBoi(boolean pressed) {
+    public void shooter(boolean pressed) {
 
 
         if (pressed) {

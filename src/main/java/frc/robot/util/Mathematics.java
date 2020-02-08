@@ -1,6 +1,6 @@
 package frc.robot.util;
 
-import frc.robot.config.LimelightConstants;
+import frc.robot.LimelightConstants;
 
 /** Class for mathematic functions */
 public class Mathematics {

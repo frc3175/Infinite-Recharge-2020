@@ -5,7 +5,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drive;
-import frc.robot.config.LimelightConstants;
+import frc.robot.LimelightConstants;
 import frc.robot.util.LimelightAssist;
 import frc.robot.util.Mathematics;
 

@@ -12,8 +12,6 @@ import edu.wpi.first.wpilibj.Timer;
 // Step 5: reverse all steps and shoot 5 cells
 public class Auton {
 
-   
-
     private Shooter shooter;
 
     private AHRS s_NavX;
@@ -35,12 +33,35 @@ public class Auton {
 
     // One wheel rotation = ~12,000 ticks
 
-    public void shootBalls() {
-        if (autonState == 0) {
+    public void turnRobot(int State, double val, double leftdrive, double rightdrive, boolean anglePositive) {
+        if (autonState == State) {
+            if (anglePositive) {
+                // Do positive angle code
+                if (s_NavX.getAngle() < val) {
+                    Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, leftdrive, rightdrive);
+                } else {
+                    Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0, 0);
+                    autonState++;
+                }
+            } else {
+                // Do negative angle code
+                if (s_NavX.getAngle() > val) {
+                    Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, leftdrive, rightdrive);
+                } else {
+                    Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0, 0);
+                    autonState++;
+                }
+            }
+        }
+    }
+
+    public void shootBall(int State, double time) {
+        if (autonState == State) {
+            // Do code
             timer.start();
             // do code
-            shooter.shooterBoi(true);
-            if (timer.hasPeriodPassed(2.5)) {
+            shooter.shooter(true);
+            if (timer.hasPeriodPassed(time)) {
                 timer.stop();
                 timer.reset();
                 autonState++;
@@ -48,28 +69,12 @@ public class Auton {
         }
     }
 
-    public void turn45() {
-
-        if (autonState == 1) {
+    public void drive(int State, int distance, double speed) {
+        if (autonState == State) {
             // Do code
-            if (s_NavX.getAngle() < 45) {
-                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0.3, 0);
-            } else {
-                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0.3, 0);
-                Drive.m_leftDriveMaster.setSelectedSensorPosition(0);
-                Drive.m_rightDriveMaster.setSelectedSensorPosition(0);
-                autonState++;
-            }
-        }
-    }
-
-    public void goStraight() {
-
-        if (autonState == 2) {
-            // Do code
-            if (Drive.m_leftDriveMaster.getSelectedSensorPosition() < 36000
-                    && Drive.m_rightDriveMaster.getSelectedSensorPosition() < 36000) {
-                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 1, 1);
+            if (Drive.m_leftDriveMaster.getSelectedSensorPosition() < distance
+                    && Drive.m_rightDriveMaster.getSelectedSensorPosition() < distance) {
+                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, speed, speed);
             } else {
                 Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0.0, 0);
                 autonState++;
@@ -77,91 +82,23 @@ public class Auton {
         }
     }
 
-    public void turn45Opposite() {
-
-        if (autonState == 3) {
-            // Do code
-            if (s_NavX.getAngle() > 0) {
-                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0, 0.3);
-            } else {
-                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0, 0);
-                autonState++;
-            }
-        }
+    public void resetEncoders() {
+        Drive.m_leftDriveMaster.setSelectedSensorPosition(0);
+        Drive.m_rightDriveMaster.setSelectedSensorPosition(0);
     }
 
-    public void goStraight2() {
-
-        if (autonState == 4) {
-            // Do code
-            if (Drive.m_leftDriveMaster.getSelectedSensorPosition() < 36000
-                    && Drive.m_rightDriveMaster.getSelectedSensorPosition() < 36000) {
-                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 1, 1);
-            } else {
-                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0, 0);
-                Drive.m_leftDriveMaster.setSelectedSensorPosition(0);
-                Drive.m_rightDriveMaster.setSelectedSensorPosition(0);
-                autonState++;
-            }
-
-        }
-
-    }
-
-    public void reverseBack() {
-
-        if (autonState == 5) {
-            // Do code
-            if (Drive.m_rightDriveMaster.getSelectedSensorPosition() > -36000
-                    && Drive.m_leftDriveMaster.getSelectedSensorPosition() > -36000) {
-                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, -1, -1);
-            } else {
-                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0, 0);
-                autonState++;
-            }
-        }
-
-    }
-
-    public void turn180() {
-
-        if (autonState == 6) {
-            // Do code
-            if (s_NavX.getAngle() < 180) {
-                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0.8, 0);
-            } else {
-                Drive.autonTank(Drive.m_rightDriveMaster, Drive.m_leftDriveMaster, 0, 0);
-                autonState++;
-            }
-
-        }
-
-    }
-
-    public void shootBalls2() {
-
-        if (autonState == 7) {
-            // Do code
-            timer.start();
-            // do code
-            shooter.shooterBoi(true);
-            if (timer.hasPeriodPassed(2.5)) {
-                timer.stop();
-                timer.reset();
-                autonState++;
-
-            }
-
-        }
-    }
-    public void execute(){
-        shootBalls();
-        turn45();
-        goStraight();
-        turn45Opposite();
-        goStraight2();
-        reverseBack();
-        turn180();
-        shootBalls2();
+    public void execute() {
+        shootBall(0, 2.5);
+        // turn 45
+        turnRobot(1, 45, 0.5, 0, true);
+        drive(2, 36000, 1);
+        // turn -45
+        turnRobot(3, 0, 0, 0.5, false);
+        drive(4, 36000, 1);
+        resetEncoders();
+        drive(5, -36000, -1);
+        // do a 180 to aim
+        turnRobot(6, 180, 0.8, 0, true);
+        shootBall(7, 2.5);
     }
 }

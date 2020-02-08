@@ -60,7 +60,7 @@ public class ShuffleBoard {
         if(returnMatchTimeStage4()) {
             SmartDashboard.putBoolean("15 Seconds", true);
         } else {
-            SmartDashboard.putBoolean("15 Seconds", false);
+            SmartDashboard.putBoolean("15 Second", false);
         }
     }
 

@@ -5,28 +5,24 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+//FRC 3175 Code
+
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.subsystems.Auton;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Operator;
 import frc.robot.subsystems.Pneumatics;
 import frc.robot.util.ShuffleBoard;
-import frc.robot.commands.LimelightTargetControl;
-import frc.robot.commands.MoveElevator;
-import frc.robot.commands.MoveIntake;
-import frc.robot.commands.ShootBall;
-import frc.robot.commands.SpinHopper;
-import frc.robot.config.ElectricalConstants;
+import frc.robot.ElectricalConstants;
 import frc.robot.lib.KvLib;
 
-/*
- * This is a demo program showing the use of the RobotDrive class, specifically
- * it contains the code necessary to operate a robot with tank drive.
- */
 public class Robot extends TimedRobot {
 
   // public config
@@ -38,14 +34,15 @@ public class Robot extends TimedRobot {
   private Limelight limelight;
   private Auton auton;
 
-  //commands
-  private ShootBall shootball = new ShootBall();
-  private SpinHopper spinHopper = new SpinHopper();
-  private MoveElevator moveElevator = new MoveElevator();
-  private LimelightTargetControl limelightTargetControl = new LimelightTargetControl();
-  private MoveIntake moveIntake = new MoveIntake();
+
+  //Global Timers
+  private Timer hopperTimer = new Timer();
+  private Timer autonTimer = new Timer();
 
 
+  //Necessary subsystems for Ian's Unconventional Code
+  private Hopper mainHopper = new Hopper();
+  private Operator mainOperator = new Operator();
 
   // Drive controller
   private XboxController driver;
@@ -55,14 +52,13 @@ public class Robot extends TimedRobot {
     /* Subsystems */
     this.drive = new Drive();
     this.pneumatics = new Pneumatics();
-
-    //TODO:Enable Limelight
     this.limelight = new Limelight();
     this.shuffleBoard = new ShuffleBoard();
-
-    //TODO:Enable Auton
     this.auton = new Auton();
-    
+
+    //Timer starts
+    hopperTimer.start();
+    autonTimer.start();
 
     // resets
     drive.reset();
@@ -75,7 +71,7 @@ public class Robot extends TimedRobot {
     pneumatics.pneumaticsInitialization();
     pneumatics.initializeCompressor(true);
 
-    //limelight initialization
+    // limelight initialization
     limelight.initializeLimelight();
 
   }
@@ -109,15 +105,28 @@ public class Robot extends TimedRobot {
 
     /* ShuffleBoard */
     shuffleBoard.shuffleBoardMatchTime();
-
     /* Operator Commands */
-    spinHopper.execute();
-    shootball.execute();
-    moveElevator.execute();
-    limelightTargetControl.execute();
-    moveIntake.execute();
-    
-    
+    mainOperator.doElevator();
+    mainOperator.doIntake();
+    mainOperator.doLimelightTargetControl();
+    mainOperator.doShooter();
+    mainOperator.doSpinHopper();
+
+    /**
+    * Ian's unconventional code THAT WORKS (take that Jessica) 
+    * Spins hopper in forward direction for 1 second
+    * Spins hopper in reverse direction for 3 seconds
+     */
+    if(mainOperator.getIntakeButton()){
+      if (hopperTimer.get() < 1) {
+        mainHopper.hopperDirection(0); 
+      } else if (hopperTimer.get() > 1 && hopperTimer.get() < 3) {
+        mainHopper.hopperDirection(1);
+      } else if (hopperTimer.get() > 3) {
+        hopperTimer.reset();
+      }
+  }
+
     double linearSpeed = KvLib.driveDeadband(driver.getRawAxis(1));
     double curveSpeed = KvLib.driveDeadband(-driver.getRawAxis(4));
     drive.move(linearSpeed, curveSpeed, driver.getRawButton(6));
