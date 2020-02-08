@@ -33,14 +33,6 @@ public class ShuffleBoard {
         }
     }
 
-    private boolean returnMatchTimeStage4() {
-        if(returnMatchTime() < 17) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public void shuffleBoardMatchTime() {
         if(returnMatchTimeStage1()) {
             SmartDashboard.putBoolean("90 Seconds", true);
@@ -56,11 +48,6 @@ public class ShuffleBoard {
             SmartDashboard.putBoolean("30 Seconds", true);
         } else {
             SmartDashboard.putBoolean("30 Seconds", false);
-        }
-        if(returnMatchTimeStage4()) {
-            SmartDashboard.putBoolean("15 Seconds", true);
-        } else {
-            SmartDashboard.putBoolean("15 Second", false);
         }
     }
 

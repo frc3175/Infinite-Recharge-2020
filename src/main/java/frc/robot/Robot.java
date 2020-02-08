@@ -112,6 +112,10 @@ public class Robot extends TimedRobot {
     mainOperator.doShooter();
     mainOperator.doSpinHopper();
 
+    //LED magic
+    mainOperator.shooterOutput();
+    mainOperator.detectTarget();
+
     /**
     * Ian's unconventional code THAT WORKS (take that Jessica) 
     * Spins hopper in forward direction for 1 second

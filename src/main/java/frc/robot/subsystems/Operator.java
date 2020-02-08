@@ -1,7 +1,9 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.config.ControllerMap;
+import frc.robot.util.LimelightAssist;
 import frc.robot.ElectricalConstants;
 
 public class Operator {
@@ -17,6 +19,9 @@ public class Operator {
     private Elevator subElevator = new Elevator();
     private Shooter subShooter = new Shooter();
     private Limelight subLimelight = new Limelight();
+    private LimelightAssist subLimelightAssist = new LimelightAssist();
+    private DigitalOutput shooterOutput = new DigitalOutput(0);
+    private DigitalOutput limelightTarget = new DigitalOutput(1);
 
     /**
      * 
@@ -112,9 +117,30 @@ public class Operator {
         }
     }
 
-    //Limelight TargetControl
+    // Limelight TargetControl
     public void doLimelightTargetControl() {
         subLimelight.limelightTargetControl(getLimelightTrenchAlignButton(), getLimelightLineAlignButton());
+    }
+
+    // change LED's to larson cyclon (Only sending digital signal to arduino)
+    public void shooterOutput() {
+        if (getShooterButton()) {
+            shooterOutput.set(true);
+        } else {
+            shooterOutput.set(false);
+        }
+    }
+
+    // limelight has target output digital signal
+    @SuppressWarnings("all")
+    public void detectTarget() {
+        if (getShooterButton() == false) {
+            if (subLimelightAssist.hasValidTarget()) {
+                limelightTarget.set(true);
+            } else {
+                limelightTarget.set(false);
+            }
+        }
     }
 
 }
