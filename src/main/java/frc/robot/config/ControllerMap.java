@@ -36,6 +36,15 @@ public class ControllerMap {
     //Back Button
     public static final int ElevatorButton = 7;    
 
+    //start Button
+    public static final int IntakePiston = 8;
+
+    //limelight LED on
+    public static final int LimelightLEDOn = 9;
+
+    //limelight LED off
+    public static final int LimightLEDOff = 10;
+
 
 
 }

@@ -111,6 +111,8 @@ public class Robot extends TimedRobot {
     mainOperator.doLimelightTargetControl();
     mainOperator.doShooter();
     mainOperator.doSpinHopper();
+    mainOperator.changeLimelightLEDs();
+    mainOperator.doIntakePiston();
 
     //LED magic
     mainOperator.shooterOutput();

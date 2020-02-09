@@ -8,7 +8,7 @@ import frc.robot.config.RobotConfig;
 
 public class Pneumatics {
 
-    private DoubleSolenoid e_piston, t_piston;
+    private DoubleSolenoid intakePiston;
     private Compressor compressor;
 
 
@@ -16,50 +16,20 @@ public class Pneumatics {
             compressor = new Compressor(0);
             
             //Pistons
-            this.e_piston = new DoubleSolenoid(ElectricalConstants.e_pistonSolenoid_F, ElectricalConstants.e_pistonSolenoid_R);
-            this.t_piston = new DoubleSolenoid(ElectricalConstants.t_pistonSolenoid_F, ElectricalConstants.t_pistonSolenoid_R);
-        }
-        
-    @SuppressWarnings("all")
-    public void elevatorActuater(boolean pressed) {
-
-        if (pressed) {
-            if (RobotConfig.elevatorDirection == 0) {
-                e_piston.set(Value.kReverse);
-            } else {
-                e_piston.set(Value.kForward);
-            }
-        }
-    }
-
-    @SuppressWarnings("all")
-    public void trenchActuaterForward(boolean pressed) {
-        if (pressed) {
-            if (RobotConfig.trenchDirection == 0) {
-                t_piston.set(Value.kForward);
-            } else {
-                t_piston.set(Value.kReverse);
-            }
+            this.intakePiston = new DoubleSolenoid(ElectricalConstants.i_pistonSolenoid_F, ElectricalConstants.i_pistonSolenoid_R);
         }
 
-    }
-
-    @SuppressWarnings("unused")
-    public void trenchActuaterReverse(boolean pressed) {
-        if (pressed) {
-            if (RobotConfig.trenchDirection == 1) {
-                t_piston.set(Value.kReverse);
-            } else {
-                t_piston.set(Value.kForward);
-            }
+    public void actuateIntakePiston(boolean pressed) {
+        if(pressed) {
+            intakePiston.set(Value.kReverse);
+        } else {
+            intakePiston.set(Value.kForward);
         }
-
     }
 
     public void resetPneumatics(boolean pressed) {
         if (pressed) {
-            e_piston.set(Value.kReverse);
-            t_piston.set(Value.kForward);
+            intakePiston.set(Value.kReverse);
         }
     }
 

@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.config.ControllerMap;
 import frc.robot.util.LimelightAssist;
+import frc.robot.util.LimelightAssist.LEDMode;
 import frc.robot.ElectricalConstants;
 
 public class Operator {
@@ -19,6 +20,7 @@ public class Operator {
     private Elevator subElevator = new Elevator();
     private Shooter subShooter = new Shooter();
     private Limelight subLimelight = new Limelight();
+    private Pneumatics subPneumatics = new Pneumatics();
     private LimelightAssist subLimelightAssist = new LimelightAssist();
     private DigitalOutput shooterOutput = new DigitalOutput(0);
     private DigitalOutput limelightTarget = new DigitalOutput(1);
@@ -82,6 +84,18 @@ public class Operator {
         return operator.getRawButton(ControllerMap.intakeButton);
     }
 
+    private boolean getLimelightLEDOn() {
+        return operator.getRawButton(ControllerMap.LimelightLEDOn);
+    }
+
+    private boolean getLimelightLEDOff() {
+        return operator.getRawButton(ControllerMap.LimightLEDOff);
+    }
+
+    private boolean getPistonIntakeButton() {
+        return operator.getRawButton(ControllerMap.IntakePiston);
+    }
+
     /* Use commands */
 
     // Spins Hopper in both directions
@@ -140,6 +154,25 @@ public class Operator {
             } else {
                 limelightTarget.set(false);
             }
+        }
+    }
+
+    // Change limelight light
+    @SuppressWarnings("all")
+    public void changeLimelightLEDs(){
+        //force off
+        if(getLimelightLEDOn()) {
+            subLimelightAssist.setLEDMode(LEDMode.FORCE_ON);
+        }  else if(getLimelightLEDOff()) {
+            subLimelightAssist.setLEDMode(LEDMode.FORCE_OFF);
+        }
+    }
+
+    public void doIntakePiston() {
+        if(getPistonIntakeButton()) {
+            subPneumatics.actuateIntakePiston(true);
+        } else {
+            subPneumatics.actuateIntakePiston(false);
         }
     }
 

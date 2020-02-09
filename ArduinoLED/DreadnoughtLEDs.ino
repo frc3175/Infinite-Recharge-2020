@@ -29,7 +29,7 @@ void fadeall() {
 void loop() {
 
   int LEDMode = digitalRead(shooterLEDMode)
-                int targetFound = digitalRead(foundTarget)
+  int targetFound = digitalRead(foundTarget)
 
 
 

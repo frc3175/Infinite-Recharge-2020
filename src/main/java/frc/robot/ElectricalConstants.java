@@ -25,11 +25,8 @@ public class ElectricalConstants {
     public static final int operatorPort = 1;
 
     // Elevator Solenoid ports
-    public static final int e_pistonSolenoid_F = 0;
-    public static final int e_pistonSolenoid_R = 1;
-    // Trench Solenoid ports
-    public static final int t_pistonSolenoid_F = 2;
-    public static final int t_pistonSolenoid_R = 3;
+    public static final int i_pistonSolenoid_F = 0;
+    public static final int i_pistonSolenoid_R = 1;
     
     // ElevatorIDs
     public static final int elevatorleftID = 17;

@@ -17,20 +17,17 @@ public class RobotConfig {
 
     // Shooter speed
     public static final double shooterSpeed_TopMotor = 0.4;
-    public static final double shooterSpeed_BottomMotor = 1;
+    public static final double shooterSpeed_BottomMotor = -1;
 
     // Hopper
-    public static final double hopperSpeed = -1; 
+    
+    public static final double hopperSpeed = -1;
     public static final double hopperSpeedReverse = 0.49;
 
-    //Elevator Speed
+    // Elevator Speed
     public static final double elevatorSpeed = 0.6;
 
-    //intake Speeds
+    // intake Speeds
     public static final double intakeSpeed = 0.8;
-
-
-
-
 
 }
