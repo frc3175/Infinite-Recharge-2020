@@ -12,12 +12,12 @@ public class Pneumatics {
     private Compressor compressor;
 
 
-        public void pneumaticsInitialization() {
-            compressor = new Compressor(0);
-            
-            //Pistons
-            this.intakePiston = new DoubleSolenoid(ElectricalConstants.i_pistonSolenoid_F, ElectricalConstants.i_pistonSolenoid_R);
-        }
+    public Pneumatics() {
+
+        //Pistons
+        this.intakePiston = new DoubleSolenoid(ElectricalConstants.i_pistonSolenoid_F, ElectricalConstants.i_pistonSolenoid_R);
+        this.compressor = new Compressor(0);
+    }
 
     public void actuateIntakePiston(boolean pressed) {
         if(pressed) {

@@ -64,6 +64,13 @@ public class Drive {
         port.set(ControlMode.PercentOutput, rightspeed);
     }
 
+    public void limelightTank(double leftspeed, double rightspeed) {
+        m_leftDriveMaster.set(ControlMode.PercentOutput, leftspeed);
+        m_leftDriveSlave.set(ControlMode.PercentOutput, leftspeed);
+        m_rightDriveMaster.set(ControlMode.PercentOutput, rightspeed);
+        m_rightDriveSlave.set(ControlMode.PercentOutput, rightspeed);
+    }
+
     /**
      * Drive using two TalonSRX and adjustment values for horizontal and distance
      * correction

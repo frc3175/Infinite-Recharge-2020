@@ -29,7 +29,6 @@ public class Robot extends TimedRobot {
 
   // subsystems
   private Drive drive;
-  private Pneumatics pneumatics;
   private ShuffleBoard shuffleBoard;
   private Limelight limelight;
   private Auton auton;
@@ -51,7 +50,6 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     /* Subsystems */
     this.drive = new Drive();
-    this.pneumatics = new Pneumatics();
     this.limelight = new Limelight();
     this.shuffleBoard = new ShuffleBoard();
     this.auton = new Auton();
@@ -68,8 +66,6 @@ public class Robot extends TimedRobot {
     driver = new XboxController(ElectricalConstants.driverPort);
 
     /* Pneumatic intiation */
-    pneumatics.pneumaticsInitialization();
-    pneumatics.initializeCompressor(true);
 
     // limelight initialization
     limelight.initializeLimelight();
@@ -79,7 +75,6 @@ public class Robot extends TimedRobot {
   // Run this to reset Pneumatic pistons
   @Override
   public void testPeriodic() {
-    pneumatics.resetPneumatics(true);
   }
 
   @Override

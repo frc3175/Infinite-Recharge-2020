@@ -133,7 +133,8 @@ public class Operator {
 
     // Limelight TargetControl
     public void doLimelightTargetControl() {
-        subLimelight.limelightTargetControl(getLimelightTrenchAlignButton(), getLimelightLineAlignButton());
+        //subLimelight.limelightTargetControl(getLimelightTrenchAlignButton(), getLimelightLineAlignButton());
+        //subLimelight.limelightTest(getLimelightTrenchAlignButton());
     }
 
     // change LED's to larson cyclon (Only sending digital signal to arduino)
